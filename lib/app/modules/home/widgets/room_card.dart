@@ -1,8 +1,7 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:toplive/app/data/models/all_rooms.dart';
-import 'package:toplive/core/constants/app_const.dart';
-import 'package:toplive/core/resourses/assets.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +20,16 @@ class RoomsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, childAspectRatio: .7 / 1),
+        crossAxisCount: 2,
+        childAspectRatio: .7 / 1,
+      ),
       itemCount: allRooms?.data?.length ?? 0,
       shrinkWrap: true,
       physics: BouncingScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FadeInUp(
+          padding: const EdgeInsets.all(4.0),
+          child: FadeInUpBig(
             child: Container(
               height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width * 0.3,
@@ -49,10 +50,12 @@ class RoomsWidget extends StatelessWidget {
                       children: [
                         Positioned.fill(
                           child: ClipRRect(
-                            child: Image.network(
-                              allRooms?.data?[index].roomImage ??
+                            child: CachedNetworkImage(
+                              height: 200,
+                              width: 200,
+                              imageUrl: allRooms?.data?[index].roomImage ??
                                   "https://picsum.photos/200",
-                              errorBuilder: (context, error, stackTrace) =>
+                              errorWidget: (context, error, stackTrace) =>
                                   Center(
                                 child: Icon(
                                   Icons.error,
@@ -84,7 +87,7 @@ class RoomsWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-                        if (allRooms?.data?.elementAt(index).category == null)
+                        if (allRooms?.data?.elementAt(index).category != null)
                           Positioned(
                             right: 5,
                             bottom: 5,
@@ -123,14 +126,17 @@ class RoomsWidget extends StatelessWidget {
                                         ?.flag ??
                                     "https://preview.redd.it/xfqw0pekwbg71.png?auto=webp&s=d18611777ab228e1c8ceb2ac441b1288be4d3c61",
                                 fit: BoxFit.cover,
-                                width: 30,
+                                height: 20,
                               ),
                             ),
                             SizedBox(width: 10),
-                            Text(
-                              allRooms?.data?[index].roomName ?? "No Name",
-                              style: getBoldTextStyle(
-                                  fontSize: 18, color: ColorsManger.black),
+                            Expanded(
+                              child: Text(
+                                allRooms?.data?[index].roomName ?? "No Name",
+                                overflow: TextOverflow.visible,
+                                style: getMediumTextStyle(
+                                    fontSize: 16, color: ColorsManger.black),
+                              ),
                             ),
                           ],
                         ),

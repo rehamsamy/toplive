@@ -50,7 +50,7 @@ class _TabBarAndTabViewsState extends State<TabBarAndTabViews>
             child: Padding(
               padding: EdgeInsets.all(6),
               child: TabBar(
-                  labelStyle: getMediumTextStyle(fontSize: 16),
+                  labelStyle: getMediumTextStyle(fontSize: 14),
                   controller: _tabController,
                   // give the indicator a decoration (color and border radius)
                   indicator: BoxDecoration(
