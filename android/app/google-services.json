@@ -1,0 +1,254 @@
+{
+  "project_info": {
+    "project_number": "190394239249",
+    "project_id": "toplive-1afbe",
+    "storage_bucket": "toplive-1afbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190394239249:android:b883285700cf045f72e4b0",
+        "android_client_info": {
+          "package_name": "com.app.googlesing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190394239249-3tv9tpsdb5d0tne1rl3io1tj2uj23f9k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.googlesing",
+            "certificate_hash": "d174d45814b60e72454060ef6747dba81b6c7b87"
+          }
+        },
+        {
+          "client_id": "190394239249-kri8mrc7bgiqp93advvs1i3q9719puk7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.googlesing",
+            "certificate_hash": "4598664c66c69d170850fe86d2a56f2189349bff"
+          }
+        },
+        {
+          "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPArlD3uFyjxdDc93mLFmny5vS17YtMIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190394239249-i4qm15opfuv6c3unqpmiptqshgv749se.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.topLive"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190394239249:android:be91587e68b6244c72e4b0",
+        "android_client_info": {
+          "package_name": "com.app.top_live"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190394239249-76ljbvmfs41op38kof1nl6p4fb45lab5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.top_live",
+            "certificate_hash": "d174d45814b60e72454060ef6747dba81b6c7b87"
+          }
+        },
+        {
+          "client_id": "190394239249-u4joci2763mro5lf64en5kbs46ok4hup.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.top_live",
+            "certificate_hash": "dc7ce3f6de245c85161dd49825381ae645104a8a"
+          }
+        },
+        {
+          "client_id": "190394239249-uvpqr1naas6dtgosiovhg49fcd70iocl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.top_live",
+            "certificate_hash": "4598664c66c69d170850fe86d2a56f2189349bff"
+          }
+        },
+        {
+          "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPArlD3uFyjxdDc93mLFmny5vS17YtMIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190394239249-i4qm15opfuv6c3unqpmiptqshgv749se.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.topLive"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190394239249:android:4cd282d6f91e8e9372e4b0",
+        "android_client_info": {
+          "package_name": "com.example.top_live"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPArlD3uFyjxdDc93mLFmny5vS17YtMIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190394239249-i4qm15opfuv6c3unqpmiptqshgv749se.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.topLive"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190394239249:android:57c94ba13201195d72e4b0",
+        "android_client_info": {
+          "package_name": "com.matrixclouds.top_live"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190394239249-kpi5ttkdj9u4u64abvgfbr573ns3ks6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.matrixclouds.top_live",
+            "certificate_hash": "1902e76b053eaf00a0b2e293449dca8034ad1137"
+          }
+        },
+        {
+          "client_id": "190394239249-qdtnqlidqlcqfvjjue7as342d6hf4qa7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.matrixclouds.top_live",
+            "certificate_hash": "33470096df70dbc1829d1912a6b03c06a28d89e2"
+          }
+        },
+        {
+          "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPArlD3uFyjxdDc93mLFmny5vS17YtMIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190394239249-i4qm15opfuv6c3unqpmiptqshgv749se.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.topLive"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190394239249:android:ab4f655d8025763c72e4b0",
+        "android_client_info": {
+          "package_name": "com.matrixclouds.toplive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190394239249-mg59547853q56fihj647jr06v3obudgc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.matrixclouds.toplive",
+            "certificate_hash": "33470096df70dbc1829d1912a6b03c06a28d89e2"
+          }
+        },
+        {
+          "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPArlD3uFyjxdDc93mLFmny5vS17YtMIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190394239249-m3gkdkgv7rsnplt1nme1708tkhur4ecv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190394239249-i4qm15opfuv6c3unqpmiptqshgv749se.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.topLive"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
