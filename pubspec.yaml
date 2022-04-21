@@ -33,12 +33,12 @@ dependencies:
   intl: ^0.17.0
   intl_phone_field: ^3.1.0
   permission_handler: ^9.2.0
+  persistent_bottom_nav_bar: ^4.0.2
   pin_code_fields: ^7.4.0
   sentry_flutter: ^6.4.0
   stream_chat: ^3.6.1
   stream_chat_flutter: ^3.6.1
-  stream_chat_flutter_core:
-
+  stream_chat_flutter_core: null
   stream_chat_localizations: ^2.1.0
   stream_chat_persistence: ^3.1.0
 flutter_assets:

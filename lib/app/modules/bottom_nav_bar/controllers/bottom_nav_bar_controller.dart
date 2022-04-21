@@ -1,42 +1,66 @@
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:toplive/app/modules/chat/views/chat_view.dart';
+import 'package:toplive/app/modules/events/views/events_view.dart';
+import 'package:toplive/core/resourses/assets.dart';
+import 'package:toplive/core/resourses/color_manger.dart';
 
 import '../../home/views/home_view.dart';
 import '../../profile/views/profile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class BottomNavBarController extends GetxController {
   RxDouble height = 1.0.obs;
   Widget _currentScreen = HomeView();
-  RxBool floor = false.obs; //*(False = 1) And(True for 2)
+  PersistentTabController navController =
+      PersistentTabController(initialIndex: 0);
 
-  get CurrentScreen => _currentScreen;
+  get currentScreen => _currentScreen;
 
-  final RxInt _navIndex = 0.obs;
+  List<PersistentBottomNavBarItem> navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Image.asset(
+          Assets.assetsImagesGroup,
+        ),
+        title: ("Rooms"),
+        activeColorPrimary: ColorsManger.primary,
+        inactiveColorPrimary: ColorsManger.primary,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Image.asset(
+          Assets.assetsImagesFriends,
+        ),
+        title: ("friends"),
+        activeColorPrimary: ColorsManger.primary,
+        inactiveColorPrimary: ColorsManger.primary,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Image.asset(
+          Assets.assetsImagesChats,
+        ),
+        title: ("chat"),
+        activeColorPrimary: ColorsManger.primary,
+        inactiveColorPrimary: ColorsManger.primary,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Image.asset(
+          Assets.assetsImagesEvents,
+        ),
+        title: ("events"),
+        activeColorPrimary: ColorsManger.primary,
+        inactiveColorPrimary: ColorsManger.primary,
+      ),
+    ];
+  }
 
-  get navIndex => _navIndex;
-  onSelected(int index) {
-    _navIndex.value = index;
-    switch (index) {
-      case 0:
-        {
-          _currentScreen = HomeView();
-
-          break;
-        }
-
-      case 1:
-        {
-          _currentScreen = ChatView();
-          break;
-        }
-      case 2:
-        {
-          _currentScreen = ProfileView();
-          break;
-        }
-    }
-
-    update();
+  List<Widget> buildScreens() {
+    return [
+      HomeView(),
+      ChatView(),
+      HomeView(),
+      EventsView(),
+    ];
   }
 }

@@ -24,7 +24,6 @@ Future<void> main() async {
     "messaging",
     id: "toplive",
   );
-  channel.watch();
   client.connectUser(
       User(
         id: user?.data?.id.toString() ?? "Top Live",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toplive/core/resourses/color_manger.dart';
 
 import '../../../../core/constants/app_const.dart';
 import '../../../data/models/room_categories.dart';
@@ -24,10 +25,9 @@ class CategoriesList extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FilterChip(
+                    selectedColor: ColorsManger.primary,
                     label: Text(categories.data?.elementAt(index).name ?? ""),
-                    onSelected: (bool value) {
-                      print(index);
-                    },
+                    onSelected: (bool value) {},
                   ),
                 );
               },

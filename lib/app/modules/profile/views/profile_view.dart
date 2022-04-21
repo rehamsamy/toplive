@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,7 @@ import 'package:toplive/core/resourses/assets.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/styles_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';
-
+import 'package:flutter/services.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -64,11 +65,26 @@ class ProfileView extends GetView<ProfileController> {
                                 style: getMediumTextStyle(
                                   fontSize: AppSize.size20,
                                 )),
-                            SelectableText(
-                                "id: " + user.data!.userId.toString(),
-                                style: getMediumTextStyle(
-                                  fontSize: AppSize.size20,
-                                )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SelectableText(
+                                    "id: " + user.data!.userId.toString(),
+                                    style: getMediumTextStyle(
+                                        fontSize: AppSize.size20,
+                                        color: ColorsManger.primary)),
+                                IconButton(
+                                  icon: Icon(Icons.copy,
+                                      color: ColorsManger.primary),
+                                  onPressed: () {
+                                    Get.snackbar(
+                                        "Copied", user.data!.userId.toString());
+                                    Clipboard.setData(ClipboardData(
+                                        text: user.data!.userId.toString()));
+                                  },
+                                )
+                              ],
+                            ),
                             const SizedBox(height: AppSize.size12),
                             EditableTextField(
                               controller: controller.name,
@@ -84,6 +100,9 @@ class ProfileView extends GetView<ProfileController> {
                                       MediaQuery.of(context).size.width / 2.2,
                                   child: EditableTextField(
                                     controller: controller.gender,
+                                    onChanged: (value) {
+                                      controller.isEditing.value = true;
+                                    },
                                   ),
                                 ),
                                 Container(
@@ -145,7 +164,43 @@ class ProfileView extends GetView<ProfileController> {
                                   color: ColorsManger.error,
                                 ),
                               ),
-                            )
+                            ),
+                            Obx(() {
+                              if (!controller.isEditing.value) {
+                                return FadeInUpBig(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(
+                                            AppSize.size12)),
+                                    child: ListTile(
+                                      onTap: () async {
+                                        await FirebaseAuth.instance
+                                            .signOut()
+                                            .then((value) =>
+                                                Get.toNamed(Routes.AUTH));
+                                      },
+                                      title: Text(
+                                        "Sign out",
+                                        style: getBoldTextStyle(
+                                            color: ColorsManger.error,
+                                            fontSize: 18),
+                                      ),
+                                      leading: Icon(
+                                        Icons.logout,
+                                        color: ColorsManger.error,
+                                      ),
+                                      trailing: Icon(
+                                        Icons.arrow_forward_ios_outlined,
+                                        color: ColorsManger.error,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                            })
                           ],
                         ),
                       ),

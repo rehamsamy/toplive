@@ -9,7 +9,8 @@ class EditableTextField extends StatelessWidget {
       this.prfixIcon = const Icon(Icons.person),
       this.hintText = "example :",
       this.helperText = "",
-      this.enabled = true})
+      this.enabled = true,
+      this.onChanged})
       : super(key: key);
   final TextEditingController controller;
   final Widget? suffixIcon;
@@ -17,12 +18,14 @@ class EditableTextField extends StatelessWidget {
   final String? hintText;
   final String helperText;
   final bool enabled;
+  final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: controller,
+        onChanged: onChanged,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 0, color: Colors.white),

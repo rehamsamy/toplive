@@ -10,6 +10,7 @@ abstract class Routes {
   static const ROOM = _Paths.ROOM;
   static const BOTTOM_NAV_BAR = _Paths.BOTTOM_NAV_BAR;
   static const CHAT = _Paths.CHAT;
+  static const EVENTS = _Paths.EVENTS;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const ROOM = '/room';
   static const BOTTOM_NAV_BAR = '/bottom-nav-bar';
   static const CHAT = '/chat';
+  static const EVENTS = '/events';
 }

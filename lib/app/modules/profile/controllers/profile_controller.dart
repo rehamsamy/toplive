@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
 class ProfileController extends GetxController {
+  RxBool isEditing = false.obs;
   XFile? profileImage;
   TextEditingController status = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -11,5 +12,5 @@ class ProfileController extends GetxController {
   TextEditingController country = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  String countryFlag="";
+  String countryFlag = "";
 }

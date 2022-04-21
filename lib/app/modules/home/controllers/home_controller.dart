@@ -11,9 +11,4 @@ class HomeController extends GetxController {
     user = await ProfileApis().getUserProfile();
     super.onInit();
   }
-
-  RxBool hideProfile = false.obs;
-  RxBool enablePrivateChat = false.obs;
-  RxBool enableNotifications = false.obs;
-  RxBool hideFriends = false.obs;
 }

@@ -8,9 +8,4 @@ class ChatController extends GetxController {
     "messaging",
     id: "toplive",
   );
-  @override
-  void onInit() {
-    super.onInit();
-    channel.watch();
-  }
 }

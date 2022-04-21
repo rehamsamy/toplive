@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:get/get.dart';
+import 'package:stream_chat_flutter/scrollable_positioned_list/src/positioned_list.dart';
 import 'package:toplive/app/data/models/all_countries.dart';
 import 'package:toplive/app/data/models/all_rooms.dart';
 import 'package:toplive/app/data/models/room_categories.dart';
@@ -9,6 +10,7 @@ import 'package:toplive/app/data/remote_data_sources/home_apis.dart';
 import 'package:toplive/app/modules/home/widgets/Carousel.dart';
 import 'package:toplive/app/modules/home/widgets/categories_list.dart';
 import 'package:toplive/app/modules/home/widgets/countries_list.dart';
+import 'package:toplive/app/modules/home/widgets/my_room.dart';
 import 'package:toplive/app/modules/home/widgets/room_card.dart';
 import 'package:toplive/app/modules/home/widgets/toggle_button.dart';
 import 'package:toplive/core/constants/app_const.dart';
@@ -27,86 +29,6 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: false,
-            leading: IconButton(
-                icon: Icon(Icons.settings_rounded),
-                onPressed: () {
-                  Get.bottomSheet(
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20))),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            Text(
-                              "Settings",
-                              style: getBoldTextStyle(),
-                            ),
-                            const SizedBox(height: 20),
-                            ListTile(
-                              leading: Icon(Icons.person),
-                              title: Text("Hide profile"),
-                              trailing: Obx(() {
-                                return CupertinoSwitch(
-                                  value: controller.hideProfile.value,
-                                  activeColor: ColorsManger.primary,
-                                  onChanged: (value) {
-                                    controller.hideProfile.value = value;
-                                  },
-                                );
-                              }),
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.person),
-                              title: Text("Hide profile"),
-                              trailing: Obx(() {
-                                return CupertinoSwitch(
-                                  value: controller.hideProfile.value,
-                                  activeColor: ColorsManger.primary,
-                                  onChanged: (value) {
-                                    controller.hideProfile.value = value;
-                                  },
-                                );
-                              }),
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.person),
-                              title: Text("Hide profile"),
-                              trailing: Obx(() {
-                                return CupertinoSwitch(
-                                  value: controller.hideProfile.value,
-                                  activeColor: ColorsManger.primary,
-                                  onChanged: (value) {
-                                    controller.hideProfile.value = value;
-                                  },
-                                );
-                              }),
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.person),
-                              title: Text("Hide profile"),
-                              trailing: Obx(() {
-                                return CupertinoSwitch(
-                                  value: controller.hideProfile.value,
-                                  activeColor: ColorsManger.primary,
-                                  onChanged: (value) {
-                                    controller.hideProfile.value = value;
-                                  },
-                                );
-                              }),
-                            ),
-                            ToggleBtns(
-                                texts: [Text("العربية "), Text("English")],
-                                selected: (i) => Get.updateLocale(
-                                    i == 0 ? Locale("ar") : Locale("en")))
-                          ],
-                        ),
-                      ),
-                      elevation: 8,
-                      barrierColor: Colors.transparent);
-                }),
             title: CircleAvatar(
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
@@ -128,6 +50,7 @@ class HomeView extends GetView<HomeController> {
                       height: MediaQuery.of(context).size.height * .87,
                       width: double.infinity,
                       child: TabBarAndTabViews(tabs: [
+                        //*PUBLICROOMS TAB
                         TabPair(
                           tab: Tab(
                             text: 'Public Rooms',
@@ -151,6 +74,7 @@ class HomeView extends GetView<HomeController> {
                             ],
                           ),
                         ),
+                        //* EXPLORE Tab
                         TabPair(
                           tab: Tab(
                             text: 'Explore',
@@ -175,12 +99,14 @@ class HomeView extends GetView<HomeController> {
                             ],
                           ),
                         ),
+                        //* MYROOMS Tab
                         TabPair(
                           tab: Tab(
                             text: 'My Rooms',
                           ),
                           view: Column(
                             children: [
+                              MyRoom(),
                               Container(
                                 width: double.infinity,
                                 child: SearchInput(
