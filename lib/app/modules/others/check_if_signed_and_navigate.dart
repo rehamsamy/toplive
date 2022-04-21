@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:toplive/app/modules/auth/views/auth_view.dart';
+import 'package:toplive/app/modules/bottom_nav_bar/views/bottom_nav_bar_view.dart';
 import 'package:toplive/app/modules/home/views/home_view.dart';
 
 class CheckSigningIn extends StatefulWidget {
@@ -35,6 +36,6 @@ class _CheckSigningInState extends State<CheckSigningIn> {
           )
         : _user == null
             ? AuthView()
-            : HomeView();
+            : BottomNavBarView();
   }
 }

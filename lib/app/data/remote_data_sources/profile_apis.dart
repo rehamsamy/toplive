@@ -6,7 +6,7 @@ import 'package:dio_logger/dio_logger.dart';
 import 'package:toplive/core/constants/app_const.dart';
 
 class ProfileApis {
-  Future<UserModel?> getUserProfile({String? userId}) async {
+  Future<UserModel?> getUserProfile() async {
     Dio dio = Dio();
     dio.interceptors
       ..add(DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))

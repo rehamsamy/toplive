@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:get/get.dart';
+import 'package:toplive/app/data/models/all_countries.dart';
 import 'package:toplive/app/data/models/all_rooms.dart';
+import 'package:toplive/app/data/models/room_categories.dart';
 import 'package:toplive/app/data/remote_data_sources/home_apis.dart';
 import 'package:toplive/app/modules/home/widgets/Carousel.dart';
+import 'package:toplive/app/modules/home/widgets/categories_list.dart';
+import 'package:toplive/app/modules/home/widgets/countries_list.dart';
 import 'package:toplive/app/modules/home/widgets/room_card.dart';
 import 'package:toplive/app/modules/home/widgets/toggle_button.dart';
 import 'package:toplive/core/constants/app_const.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/styles_manger.dart';
+import 'package:toplive/core/resourses/values_manger.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/search_widget.dart';
 import '../widgets/tab_bar.dart';
@@ -152,6 +157,8 @@ class HomeView extends GetView<HomeController> {
                           ),
                           view: Column(
                             children: [
+                              AllCountriesList(),
+                              CategoriesList(),
                               Container(
                                 width: double.infinity,
                                 child: SearchInput(

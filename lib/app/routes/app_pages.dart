@@ -4,6 +4,8 @@ import 'package:toplive/app/modules/auth/bindings/auth_binding.dart';
 import 'package:toplive/app/modules/auth/views/auth_view.dart';
 import 'package:toplive/app/modules/bottom_nav_bar/bindings/bottom_nav_bar_binding.dart';
 import 'package:toplive/app/modules/bottom_nav_bar/views/bottom_nav_bar_view.dart';
+import 'package:toplive/app/modules/chat/bindings/chat_binding.dart';
+import 'package:toplive/app/modules/chat/views/chat_view.dart';
 import 'package:toplive/app/modules/home/bindings/home_binding.dart';
 import 'package:toplive/app/modules/home/views/home_view.dart';
 import 'package:toplive/app/modules/profile/bindings/profile_binding.dart';
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.BOTTOM_NAV_BAR,
       page: () => BottomNavBarView(),
       binding: BottomNavBarBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT,
+      page: () => ChatView(),
+      binding: ChatBinding(),
     ),
   ];
 }

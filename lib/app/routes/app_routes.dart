@@ -9,6 +9,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const ROOM = _Paths.ROOM;
   static const BOTTOM_NAV_BAR = _Paths.BOTTOM_NAV_BAR;
+  static const CHAT = _Paths.CHAT;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const ROOM = '/room';
   static const BOTTOM_NAV_BAR = '/bottom-nav-bar';
+  static const CHAT = '/chat';
 }
