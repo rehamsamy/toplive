@@ -87,7 +87,7 @@ class AuthController extends GetxController {
           PhoneAuthProvider.credential(verificationId: verId, smsCode: otp));
       if (userCredential.user != null) {
         isLoading.value = false;
-        Get.offAllNamed(Routes.HOME);
+        Get.offAllNamed(Routes.BOTTOM_NAV_BAR);
       }
     } on Exception catch (e) {
       Get.snackbar("otp info", " ${e.toString()}");

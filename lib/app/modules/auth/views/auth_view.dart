@@ -43,7 +43,7 @@ class AuthView extends GetView<AuthController> {
                 backgroundColor: Colors.blue,
                 onPressed: () => controller
                     .signInWithFacebook()
-                    .then((value) => Get.offAllNamed(Routes.HOME)),
+                    .then((value) => Get.offAllNamed(Routes.BOTTOM_NAV_BAR)),
                 foregroundColor: ColorsManger.white,
               ),
               LoginButton(
@@ -52,7 +52,7 @@ class AuthView extends GetView<AuthController> {
                 backgroundColor: Colors.white,
                 onPressed: () => controller
                     .signInWithGoogle()
-                    .then((value) => Get.offAllNamed(Routes.HOME)),
+                    .then((value) => Get.offAllNamed(Routes.BOTTOM_NAV_BAR)),
                 foregroundColor: Color(0xffFF095C),
               ),
               LoginButton(

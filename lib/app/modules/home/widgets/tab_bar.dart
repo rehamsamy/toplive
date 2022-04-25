@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/styles_manger.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class TabPair {
   final Tab tab;
@@ -41,6 +42,7 @@ class _TabBarAndTabViewsState extends State<TabBarAndTabViews>
           // give the tab bar a height [can change height to preferred height]
           Container(
             height: 45,
+            // width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(
@@ -53,16 +55,16 @@ class _TabBarAndTabViewsState extends State<TabBarAndTabViews>
                   labelStyle: getMediumTextStyle(fontSize: 14),
                   controller: _tabController,
                   // give the indicator a decoration (color and border radius)
-                  indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      25.0,
-                    ),
+                  indicatorSize: TabBarIndicatorSize.label, //makes it better
+                  labelColor: ColorsManger.primary, //Google's sweet blue
+                  unselectedLabelColor: Color(0xff5f6368), //niceish grey
+                  // isScrollable: true, //up to your taste
+                  indicator: MaterialIndicator(
+                    tabPosition: TabPosition.bottom,
                     color: ColorsManger.primary,
+                    strokeWidth: 6,
+                    paintingStyle: PaintingStyle.fill,
                   ),
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  labelColor: Colors.white,
-                  indicatorColor: ColorsManger.primary,
-                  unselectedLabelColor: Colors.black,
                   tabs: widget.tabs.map((tabPair) => tabPair.tab).toList()),
             ),
           ),

@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:toplive/app/data/models/user_model.dart';
 import 'package:toplive/app/data/remote_data_sources/profile_apis.dart';
 import 'package:toplive/app/modules/profile/views/widgets/block_list.dart';
@@ -46,13 +46,18 @@ class ProfileView extends GetView<ProfileController> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     UserModel? user = snapshot.data;
-                    controller.name.text = user?.data!.name ?? " ";
-                    controller.birthDate.text = user?.data!.birthDate ?? " ";
-                    controller.gender.text = user?.data!.gender ?? " ";
-                    controller.status.text = user!.data!.profileStatus ?? " ";
-                    controller.email.text = user.data!.email ?? " ";
-                    controller.country.text = user.data!.country!.name ?? " ";
+                    controller.name.text = user?.data!.name ?? "name";
+
+                    controller.birthDate.value =
+                        DateTime.parse(user?.data!.birthDate ?? "1999-10-9");
+                    controller.gender.text = user?.data!.gender ?? "gender ";
+                    controller.status.text =
+                        user!.data!.profileStatus ?? "status ";
+                    controller.email.text = user.data!.email ?? "email ";
+                    controller.country.text =
+                        user.data!.country!.name ?? " country";
                     controller.countryFlag = user.data!.country!.flag ?? "";
+
                     return SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.all(AppPadding.padding12),
@@ -88,9 +93,21 @@ class ProfileView extends GetView<ProfileController> {
                             const SizedBox(height: AppSize.size12),
                             EditableTextField(
                               controller: controller.name,
+                              prfixIcon: Image.asset(
+                                Assets.assetsImagesUser,
+                              ),
+                            ),
+                            EditableTextField(
+                              controller: controller.status,
+                              prfixIcon: Image.asset(
+                                Assets.assetsImagesStatus,
+                              ),
                             ),
                             EditableTextField(
                               controller: controller.email,
+                              prfixIcon: Image.asset(
+                                Assets.assetsImagesEmail,
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,6 +116,9 @@ class ProfileView extends GetView<ProfileController> {
                                   width:
                                       MediaQuery.of(context).size.width / 2.2,
                                   child: EditableTextField(
+                                    prfixIcon: Image.asset(
+                                      Assets.assetsImagesGender,
+                                    ),
                                     controller: controller.gender,
                                     onChanged: (value) {
                                       controller.isEditing.value = true;
@@ -125,8 +145,42 @@ class ProfileView extends GetView<ProfileController> {
                                 )
                               ],
                             ),
-                            EditableTextField(
-                              controller: controller.birthDate,
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: ColorsManger.white,
+                                    borderRadius:
+                                        BorderRadius.circular(AppSize.size12)),
+                                child: Obx(() {
+                                  return ListTile(
+                                    onTap: () async {
+                                      final DateTime? selected =
+                                          await showDatePicker(
+                                        context: context,
+                                        initialDate: controller.birthDate.value,
+                                        firstDate: DateTime(1950),
+                                        lastDate: DateTime(2010),
+                                      );
+                                      if (selected != null &&
+                                          selected !=
+                                              controller.birthDate.value) {
+                                        controller.birthDate.value = selected;
+                                      }
+                                    },
+                                    leading: Image.asset(
+                                      Assets.assetsImagesCalender,
+                                    ),
+                                    trailing: Icon(Icons.edit),
+                                    title: Text(
+                                        controller.getFormattedDate(
+                                            controller.birthDate.toString()),
+                                        style: getMediumTextStyle(
+                                            fontSize: AppSize.size16,
+                                            color: ColorsManger.darkGrey)),
+                                  );
+                                }),
+                              ),
                             ),
                             OpenContainer(
                               closedBuilder: (context, action) =>
@@ -165,42 +219,6 @@ class ProfileView extends GetView<ProfileController> {
                                 ),
                               ),
                             ),
-                            Obx(() {
-                              if (!controller.isEditing.value) {
-                                return FadeInUpBig(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(
-                                            AppSize.size12)),
-                                    child: ListTile(
-                                      onTap: () async {
-                                        await FirebaseAuth.instance
-                                            .signOut()
-                                            .then((value) =>
-                                                Get.toNamed(Routes.AUTH));
-                                      },
-                                      title: Text(
-                                        "Sign out",
-                                        style: getBoldTextStyle(
-                                            color: ColorsManger.error,
-                                            fontSize: 18),
-                                      ),
-                                      leading: Icon(
-                                        Icons.logout,
-                                        color: ColorsManger.error,
-                                      ),
-                                      trailing: Icon(
-                                        Icons.arrow_forward_ios_outlined,
-                                        color: ColorsManger.error,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return const SizedBox();
-                              }
-                            })
                           ],
                         ),
                       ),

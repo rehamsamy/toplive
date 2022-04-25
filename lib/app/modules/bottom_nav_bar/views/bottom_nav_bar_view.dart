@@ -1,11 +1,7 @@
-import 'package:ease/widgets/bottom_nav_bar.dart';
-import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:toplive/app/modules/home/views/home_view.dart';
-import 'package:toplive/core/resourses/color_manger.dart';
 
 import '../controllers/bottom_nav_bar_controller.dart';
 
