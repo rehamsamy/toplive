@@ -1,18 +1,27 @@
+import 'dart:io';
+
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get_navigation/src/routes/get_transition_mixin.dart';
 import 'package:intl/intl.dart';
+import 'package:toplive/app/data/models/all_countries.dart';
 import 'package:toplive/app/data/models/user_model.dart';
+import 'package:toplive/app/data/remote_data_sources/home_apis.dart';
 import 'package:toplive/app/data/remote_data_sources/profile_apis.dart';
+import 'package:toplive/app/modules/home/controllers/home_controller.dart';
 import 'package:toplive/app/modules/profile/views/widgets/block_list.dart';
 import 'package:toplive/app/modules/profile/views/widgets/block_list_button.dart';
+import 'package:toplive/app/modules/profile/views/widgets/dropdown.dart';
 import 'package:toplive/app/modules/profile/views/widgets/editable_text_field.dart';
 import 'package:toplive/app/modules/profile/views/widgets/profile_image.dart';
 import 'package:toplive/app/routes/app_pages.dart';
+import 'package:toplive/core/constants/app_const.dart';
 import 'package:toplive/core/resourses/assets.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/styles_manger.dart';
@@ -50,11 +59,12 @@ class ProfileView extends GetView<ProfileController> {
 
                     controller.birthDate.value =
                         DateTime.parse(user?.data!.birthDate ?? "1999-10-9");
-                    controller.gender.text = user?.data!.gender ?? "gender ";
+                    controller.gender.value =
+                        controller.genderItems.elementAt(0);
                     controller.status.text =
                         user!.data!.profileStatus ?? "status ";
                     controller.email.text = user.data!.email ?? "email ";
-                    controller.country.text =
+                    controller.country.value =
                         user.data!.country!.name ?? " country";
                     controller.countryFlag = user.data!.country!.flag ?? "";
 
@@ -112,39 +122,41 @@ class ProfileView extends GetView<ProfileController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.2,
-                                  child: EditableTextField(
-                                    prfixIcon: Image.asset(
-                                      Assets.assetsImagesGender,
-                                    ),
-                                    controller: controller.gender,
-                                    onChanged: (value) {
-                                      controller.isEditing.value = true;
-                                    },
-                                  ),
+                                DropDown(
+                                  hintText: user.data?.gender ?? "Gender",
+                                  image: Assets.assetsImagesGender,
+                                  items: controller.genderItems,
+                                  onChanged: (val) {
+                                    controller.gender.value = val.toString();
+                                  },
                                 ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.2,
-                                  child: EditableTextField(
-                                    controller: controller.country,
-                                    prfixIcon: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(2),
-                                        child: CachedNetworkImage(
-                                          imageUrl: controller.countryFlag,
-                                          width: 40,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                FutureBuilder<AllCountriesModel?>(
+                                  future: HomeApis().getAllCountries(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      AllCountriesModel? allCountries =
+                                          snapshot.data;
+                                      return DropDown(
+                                        hintText: user.data?.country?.name ??
+                                            "Country",
+                                        image: controller.countryFlag,
+                                        items: allCountries!.data!
+                                            .map((e) => e.name.toString())
+                                            .toList(),
+                                        onChanged: (val) {
+                                          controller.country.value =
+                                              val.toString();
+                                        },
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text("${snapshot.error}");
+                                    }
+                                    return Center(child: loading);
+                                  },
                                 )
                               ],
                             ),
+                            const SizedBox(height: AppSize.size12),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8),
                               child: Container(
@@ -182,6 +194,44 @@ class ProfileView extends GetView<ProfileController> {
                                 }),
                               ),
                             ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.circular(AppSize.size12)),
+                              child: ListTile(
+                                onTap: () => () async {
+                                  File profileImagex =
+                                      File(controller.profileImage!.path);
+                                  await ProfileApis()
+                                      .updateProfile(
+                                          name: controller.name.text,
+                                          email: controller.email.text,
+                                          gender: controller.gender.value,
+                                          countryId: int.parse(
+                                              controller.country.value),
+                                          birthDate: controller.birthDate.value,
+                                          profileImage: profileImagex)
+                                      .then((value) => Get.snackbar("Updated",
+                                          "Profile updated successfully"));
+                                },
+                                title: Text(
+                                  "Update profile",
+                                  style: getBoldTextStyle(
+                                      color: ColorsManger.success,
+                                      fontSize: 18),
+                                ),
+                                leading: Icon(
+                                  CupertinoIcons.person_add_solid,
+                                  color: ColorsManger.success,
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  color: ColorsManger.success,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: AppSize.size12),
                             OpenContainer(
                               closedBuilder: (context, action) =>
                                   BlockListButton(),

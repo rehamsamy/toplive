@@ -25,7 +25,7 @@ class EditableTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: controller,
-        onChanged: onChanged,
+        onFieldSubmitted: onChanged,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 0, color: Colors.white),

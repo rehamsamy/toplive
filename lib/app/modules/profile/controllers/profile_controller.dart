@@ -9,11 +9,15 @@ class ProfileController extends GetxController {
   TextEditingController status = TextEditingController();
   TextEditingController name = TextEditingController();
   Rx<DateTime> birthDate = DateTime.now().obs;
-  TextEditingController gender = TextEditingController();
-  TextEditingController country = TextEditingController();
+  Rx<String> gender = "".obs;
+  Rx<String> country = "".obs;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   String countryFlag = "";
+  final List<String> genderItems = [
+    'Male',
+    'Female',
+  ];
   String getFormattedDate(String date) {
     /// Convert into local date format.
     var localDate = DateTime.parse(date).toLocal();

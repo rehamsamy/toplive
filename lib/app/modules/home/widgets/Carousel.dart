@@ -31,7 +31,7 @@ class Carousel extends StatelessWidget {
             ),
             ClipRRect(
               child: Image.network(
-                'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=cover&w=800&q=100',
+                'https://dev03.matrixclouds.net/top-live/public/assets/images/avatar.jpg',
                 fit: BoxFit.cover,
                 width: MediaQuery.of(context).size.width,
               ),

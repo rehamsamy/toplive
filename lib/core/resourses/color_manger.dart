@@ -18,6 +18,7 @@ class ColorsManger {
       Color(0xFF3548AE),
       Color(0xFFA324D6),
     ],
+    
     stops: [0.3, 0.7],
   );
   static const LinearGradient multiGradiants = LinearGradient(
