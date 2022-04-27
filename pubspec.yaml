@@ -35,6 +35,7 @@ dependencies:
   permission_handler: ^9.2.0
   persistent_bottom_nav_bar: ^4.0.2
   pin_code_fields: ^7.4.0
+  responsive_framework: ^0.1.7
   sentry_flutter: ^6.4.0
   tab_indicator_styler: ^2.0.0
 

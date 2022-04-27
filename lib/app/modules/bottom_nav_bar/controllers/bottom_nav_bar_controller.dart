@@ -6,7 +6,6 @@ import 'package:toplive/core/resourses/assets.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 
 import '../../home/views/home_view.dart';
-import '../../profile/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 

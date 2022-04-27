@@ -10,6 +10,8 @@ import 'package:toplive/core/services/theme.dart';
 import 'package:toplive/core/services/translations_service.dart';
 import 'app/routes/app_pages.dart';
 
+import 'package:responsive_framework/responsive_framework.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -49,6 +51,18 @@ class MyApp extends StatelessWidget {
         ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
           return CustomError(errorDetails: errorDetails);
         };
+        ResponsiveWrapper(
+          maxWidth: 1200,
+          minWidth: 480,
+          defaultScale: true,
+          breakpoints: [
+            ResponsiveBreakpoint.resize(480, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+            ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+          ],
+          child: widget,
+        );
         return widget!;
       },
     );

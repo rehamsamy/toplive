@@ -6,6 +6,7 @@ import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';
 
 import '../../../../core/resourses/styles_manger.dart';
+import '../../../data/remote_data_sources/room_apis.dart';
 
 class MyRoom extends StatelessWidget {
   const MyRoom({Key? key}) : super(key: key);
@@ -35,49 +36,60 @@ class MyRoom extends StatelessWidget {
                       ),
                     ),
                   ]),
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Spacer(),
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(AppSize.size20 * 5),
-                        child: Image.network(
-                          myRoom?.data?.roomImage.toString() ?? "",
-                          height: 50,
-                          fit: BoxFit.cover,
-                        )),
-                    Spacer(),
-                    Text(myRoom?.data?.joinedUsers?.length.toString() ?? "",
-                        style: getMediumTextStyle()),
-                    Icon(Icons.person,
-                        color: ColorsManger.primary, size: AppSize.size20),
-                  ],
-                ),
-                const SizedBox(width: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(AppSize.size20 * 5),
-                        child: Image.network(
-                          myRoom?.data?.roomCountry?.flag.toString() ?? "",
-                          height: 15,
-                          fit: BoxFit.contain,
-                        )),
-                    const SizedBox(width: 8),
-                    Text(
-                      "${myRoom?.data?.roomName}",
-                      style: getMediumTextStyle(fontSize: 16),
+              child: myRoom?.data != null
+                  ? Column(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(AppSize.size20 * 5),
+                              child: Image.network(
+                                myRoom?.data?.roomImage.toString() ?? "",
+                                height: 50,
+                                fit: BoxFit.cover,
+                              )),
+                          Spacer(),
+                          Text(
+                              myRoom?.data?.joinedUsers?.length.toString() ??
+                                  "",
+                              style: getMediumTextStyle()),
+                          Icon(Icons.person,
+                              color: ColorsManger.primary,
+                              size: AppSize.size20),
+                        ],
+                      ),
+                      const SizedBox(width: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(AppSize.size20 * 5),
+                              child: Image.network(
+                                myRoom?.data?.roomCountry?.flag.toString() ??
+                                    "",
+                                height: 15,
+                                fit: BoxFit.contain,
+                              )),
+                          const SizedBox(width: 8),
+                          Text(
+                            "${myRoom?.data?.roomName}",
+                            style: getMediumTextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        myRoom?.data?.description ?? "",
+                        style: getMediumTextStyle(fontSize: 16),
+                      ),
+                    ])
+                  : TextButton(
+                      child: Text("Create Room"),
+                      onPressed: () => RoomApis().createRoom(),
                     ),
-                  ],
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  myRoom?.data?.description ?? "",
-                  style: getMediumTextStyle(fontSize: 16),
-                ),
-              ]),
             ),
           );
         } else if (snapshot.hasError) {

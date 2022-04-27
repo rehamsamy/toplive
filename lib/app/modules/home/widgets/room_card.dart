@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:toplive/app/data/models/all_rooms.dart';
+import 'package:toplive/app/data/models/room_model.dart';
 import 'package:toplive/app/routes/app_pages.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';
@@ -31,7 +32,11 @@ class RoomsWidget extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            Get.toNamed(Routes.ROOM);
+            Get.toNamed(
+              Routes.ROOM,
+              arguments:
+                  allRooms?.data![index].toJson() as Map<String, dynamic>,
+            );
           },
           child: Padding(
             padding: const EdgeInsets.all(4.0),

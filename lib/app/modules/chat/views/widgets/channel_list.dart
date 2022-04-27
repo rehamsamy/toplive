@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toplive/app/modules/chat/views/widgets/channel_page.dart';
 
 class ChannelListPage extends StatefulWidget {
   const ChannelListPage({

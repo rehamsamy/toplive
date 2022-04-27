@@ -5,12 +5,13 @@ class RoomService {
   static const String _appId = "8c87b5bd9bb74c238838d9a380f6be4f";
   static const String _channelName = "test_room";
   static const String _token =
-      "0068c87b5bd9bb74c238838d9a380f6be4fIAC6sIB9KufqCv6yne062Ut4Dl5QXo/QwYpmJ3/W8J23MFR75ncAAAAAEAA3CeSj9uFTYgEAAQD24VNi";
+      "0068c87b5bd9bb74c238838d9a380f6be4fIAC6DS8Wa41k/6JV1OAU1WrqvboPspMXR/O5uyrW53V2oVR75ncAAAAAEADQ1fuzOiFpYgEAAQA6IWli";
   late RtcEngine engine;
   int? remoteUid;
 
-  Future<int?> initAgora() async {
+  Future<int?> initAgora({required String channelName}) async {
     await [
+      Permission.speech,
       Permission.microphone,
       Permission.notification,
     ].request();
@@ -18,8 +19,11 @@ class RoomService {
     await engine.leaveChannel();
     engine.setEventHandler(_rtcEventHandler());
     await engine.enableAudio();
+    await engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
     await engine.setEnableSpeakerphone(true);
-   // await engine.setDefaultAudioRoutetoSpeakerphone(true);
+    await engine.setClientRole(ClientRole.Audience);
+
+    // await engine.setDefaultAudioRoutetoSpeakerphone(true);
 
     await engine.joinChannel(_token, _channelName, null, 0);
     print("user_joined");

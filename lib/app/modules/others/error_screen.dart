@@ -11,15 +11,28 @@ class CustomError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        child: Text(
-          "Something is not right here...",
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+      child: Column(
+        children: [
+          Text(
+            errorDetails.exception.toString(),
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            ),
           ),
-        ),
-        padding: const EdgeInsets.all(8.0),
+          Center(
+            child: Padding(
+              child: Text(
+                "Something is not right here...",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              padding: const EdgeInsets.all(8.0),
+            ),
+          ),
+        ],
       ),
       color: Colors.red,
       margin: EdgeInsets.zero,
