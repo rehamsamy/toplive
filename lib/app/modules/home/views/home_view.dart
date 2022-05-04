@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toplive/app/data/models/all_rooms.dart';
 import 'package:toplive/app/data/remote_data_sources/home_apis.dart';
-import 'package:toplive/app/modules/home/widgets/Carousel.dart';
+import 'package:toplive/app/modules/home/widgets/carousel.dart';
 import 'package:toplive/app/modules/home/widgets/categories_list.dart';
 import 'package:toplive/app/modules/home/widgets/countries_list.dart';
 import 'package:toplive/app/modules/home/widgets/my_room.dart';

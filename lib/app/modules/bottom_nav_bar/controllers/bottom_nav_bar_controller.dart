@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 
 class BottomNavBarController extends GetxController {
   RxDouble height = 1.0.obs;
+  // ignore: prefer_final_fields
   Widget _currentScreen = HomeView();
   PersistentTabController navController =
       PersistentTabController(initialIndex: 0);

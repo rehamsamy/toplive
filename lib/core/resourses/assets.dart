@@ -17,6 +17,10 @@ class Assets {
   /// assets/fonts/Tajawal-Regular.ttf
   static const String assetsFontsTajawalRegular = "assets/fonts/Tajawal-Regular.ttf";
 
+  /// Assets for assetsImages4
+  /// assets/images/4.png
+  static const String assetsImages4 = "assets/images/4.png";
+
   /// Assets for assetsImagesAuthBackground
   /// assets/images/auth_background.png
   static const String assetsImagesAuthBackground = "assets/images/auth_background.png";
@@ -48,6 +52,10 @@ class Assets {
   /// Assets for assetsImagesGender
   /// assets/images/gender.png
   static const String assetsImagesGender = "assets/images/gender.png";
+
+  /// Assets for assetsImagesGiftbox
+  /// assets/images/giftbox.png
+  static const String assetsImagesGiftbox = "assets/images/giftbox.png";
 
   /// Assets for assetsImagesGoogle
   /// assets/images/google.png
@@ -85,9 +93,17 @@ class Assets {
   /// assets/images/room_background.png
   static const String assetsImagesRoomBackground = "assets/images/room_background.png";
 
+  /// Assets for assetsImagesSendMessage
+  /// assets/images/send_message.png
+  static const String assetsImagesSendMessage = "assets/images/send_message.png";
+
   /// Assets for assetsImagesStatus
   /// assets/images/status.png
   static const String assetsImagesStatus = "assets/images/status.png";
+
+  /// Assets for assetsImagesUploadImg
+  /// assets/images/upload_img.png
+  static const String assetsImagesUploadImg = "assets/images/upload_img.png";
 
   /// Assets for assetsImagesUser
   /// assets/images/user.png

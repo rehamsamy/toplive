@@ -1,20 +1,15 @@
 import 'dart:io';
 
 import 'package:animations/animations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_navigation/src/routes/get_transition_mixin.dart';
-import 'package:intl/intl.dart';
 import 'package:toplive/app/data/models/all_countries.dart';
 import 'package:toplive/app/data/models/user_model.dart';
 import 'package:toplive/app/data/remote_data_sources/home_apis.dart';
 import 'package:toplive/app/data/remote_data_sources/profile_apis.dart';
-import 'package:toplive/app/modules/home/controllers/home_controller.dart';
 import 'package:toplive/app/modules/profile/views/widgets/block_list.dart';
 import 'package:toplive/app/modules/profile/views/widgets/block_list_button.dart';
 import 'package:toplive/app/modules/profile/views/widgets/dropdown.dart';

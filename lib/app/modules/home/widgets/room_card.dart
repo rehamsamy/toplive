@@ -1,9 +1,6 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
-import 'package:glass_kit/glass_kit.dart';
 import 'package:toplive/app/data/models/all_rooms.dart';
-import 'package:toplive/app/data/models/room_model.dart';
 import 'package:toplive/app/routes/app_pages.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';

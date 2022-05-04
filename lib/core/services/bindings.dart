@@ -18,9 +18,7 @@ class Binding extends Bindings {
     Get.lazyPut(
       () => ChatController(),
     );
-    Get.lazyPut(
-      () => ProfileController(),
-    );
+    Get.lazyPut(() => ProfileController(), fenix: true);
     Get.lazyPut(
       () => EventsController(),
     );
