@@ -18,7 +18,6 @@ class ColorsManger {
       Color(0xFF3548AE),
       Color(0xFFA324D6),
     ],
-    
     stops: [0.3, 0.7],
   );
   static const LinearGradient multiGradiants = LinearGradient(
@@ -28,6 +27,16 @@ class ColorsManger {
       Color(0xFF13B1AD),
       Color(0xFFD52DF2),
     ],
-    stops: [0.3, 0.7],
+    stops: [0.1, 0.9],
+  );
+  static const LinearGradient buttonGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.topRight,
+    colors: [
+      Color(0xFF13B1AD),
+      Color(0xff4414A4),
+      Color(0xFFD52DF2),
+    ],
+    stops: [0.1, 0.5, 0.9],
   );
 }
