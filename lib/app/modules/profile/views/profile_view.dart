@@ -39,12 +39,7 @@ class ProfileView extends GetView<ProfileController> {
         body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(Assets.assetsImagesWhiteBackground),
-                fit: BoxFit.cover,
-              ),
-            ),
+            decoration: backgroundBoxDectoration,
             child: FutureBuilder<UserModel?>(
                 future: ProfileApis().getUserProfile(),
                 builder: (context, snapshot) {

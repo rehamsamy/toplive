@@ -7,6 +7,8 @@ import 'package:toplive/core/resourses/styles_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 
+import '../../../../../core/constants/app_const.dart';
+
 class PhoneNumberScreen extends GetView<AuthController> {
   PhoneNumberScreen({Key? key}) : super(key: key);
 
@@ -23,11 +25,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                 child: Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image:
-                              AssetImage(Assets.assetsImagesWhiteBackground))),
+                  decoration: backgroundBoxDectoration,
                   child: Padding(
                     padding: const EdgeInsets.all(25.0),
                     child: SingleChildScrollView(

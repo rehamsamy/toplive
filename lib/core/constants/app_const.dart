@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
+import '../resourses/assets.dart';
+
 const String baseUrl = "https://dev03.matrixclouds.net/top-live/public/api/";
 enum UserType {
   owner,
   visiter,
 }
+var backgroundBoxDectoration = BoxDecoration(
+    image: DecorationImage(
+        image: AssetImage(Assets.assetsImagesWhiteBackground),
+        fit: BoxFit.cover));
 const Widget loading = Center(
   child: CupertinoActivityIndicator(),
 );

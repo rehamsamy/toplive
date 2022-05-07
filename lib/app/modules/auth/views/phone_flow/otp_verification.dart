@@ -9,6 +9,8 @@ import 'package:toplive/core/resourses/assets.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/styles_manger.dart';
 
+import '../../../../../core/constants/app_const.dart';
+
 class VerifyCodePage extends StatefulWidget {
   VerifyCodePage({Key? key}) : super(key: key);
 
@@ -50,10 +52,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
       body: GestureDetector(
         onTap: () {},
         child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(Assets.assetsImagesWhiteBackground))),
+          decoration: backgroundBoxDectoration,
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: ListView(
