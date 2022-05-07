@@ -6,6 +6,7 @@ import 'package:toplive/app/modules/room/views/widgets/room_chat_bat.dart';
 import 'package:toplive/app/modules/room/views/widgets/room_messages.dart';
 import 'package:toplive/app/modules/room/views/widgets/room_user.dart';
 import 'package:toplive/core/resourses/assets.dart';
+import 'package:toplive/core/resourses/values_manger.dart';
 import '../controllers/room_controller.dart';
 
 class RoomView extends StatefulWidget {
@@ -32,26 +33,57 @@ class _RoomViewState extends State<RoomView> {
       },
       child: Directionality(
         textDirection: TextDirection.ltr,
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(Assets.assetsImagesRoomBackground),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  RoomAppBar(),
-                  RoomUsers(),
-                  RoomMessages(),
-                  ChatBar()
-                ],
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Assets.assetsImagesRoomBackground),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      RoomAppBar(),
+                      RoomUsers(),
+                      RoomMessages(),
+                      ChatBar()
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
+            Positioned(
+              bottom: context.height / 4,
+              left: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(.2),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(AppSize.size12),
+                      topRight: Radius.circular(AppSize.size12),
+                    )),
+                child: Column(
+                  children: [
+                    IconButton(
+                      icon: Image.asset(Assets.assetsImagesSendMessage),
+                      onPressed: () {},
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    IconButton(
+                      icon: Image.asset(Assets.assetsImagesGiftbox),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     ));

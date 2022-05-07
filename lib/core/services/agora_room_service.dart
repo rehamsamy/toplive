@@ -8,6 +8,7 @@ class RoomService {
       "0068c87b5bd9bb74c238838d9a380f6be4fIAC6DS8Wa41k/6JV1OAU1WrqvboPspMXR/O5uyrW53V2oVR75ncAAAAAEADQ1fuzOiFpYgEAAQA6IWli";
   late RtcEngine engine;
   int? remoteUid;
+  bool _isAudioMuted = false;
 
   Future<int?> initAgora({required String channelName}) async {
     await [
@@ -29,6 +30,17 @@ class RoomService {
     print("user_joined");
 
     return remoteUid;
+  }
+
+  muteAudioSwitcher() async {
+    await engine.muteLocalAudioStream(!_isAudioMuted ? true : false);
+    _isAudioMuted = !_isAudioMuted;
+  }
+
+  speakerAudioSwitcher() async {
+    await engine.isSpeakerphoneEnabled() ?? true
+        ? await engine.setEnableSpeakerphone(false)
+        : await engine.setEnableSpeakerphone(true);
   }
 
   RtcEngineEventHandler _rtcEventHandler() {

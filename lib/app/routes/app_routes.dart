@@ -13,6 +13,7 @@ abstract class Routes {
   static const BOTTOM_NAV_BAR = _Paths.BOTTOM_NAV_BAR;
   static const CHAT = _Paths.CHAT;
   static const EVENTS = _Paths.EVENTS;
+  static const FRIENDS = _Paths.FRIENDS;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const BOTTOM_NAV_BAR = '/bottom-nav-bar';
   static const CHAT = '/chat';
   static const EVENTS = '/events';
+  static const FRIENDS = '/friends';
 }

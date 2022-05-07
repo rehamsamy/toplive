@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:get/get.dart';
+import 'package:toplive/core/resourses/font_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';
 
 import '../../../../../core/constants/app_const.dart';
@@ -8,6 +9,7 @@ import '../../../../../core/resourses/styles_manger.dart';
 import '../../../../../core/services/chat/room_chat.dart';
 import '../../controllers/room_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class RoomMessages extends GetWidget<RoomController> {
   const RoomMessages({Key? key}) : super(key: key);
@@ -32,17 +34,6 @@ class RoomMessages extends GetWidget<RoomController> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: ColorsManger.black.withOpacity(.5),
-                        borderRadius: BorderRadius.circular(AppSize.size12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ColorsManger.black.withOpacity(.2),
-                            blurRadius: 10,
-                            offset: Offset(0, 5),
-                          ),
-                        ],
-                      ),
                       width: MediaQuery.of(context).size.width,
                       child: Directionality(
                         textDirection: TextDirection.rtl,
@@ -72,10 +63,73 @@ class RoomMessages extends GetWidget<RoomController> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
-                                      messages[index].data()['message'],
-                                      style: getMediumTextStyle(
-                                        color: ColorsManger.white,
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color:
+                                            ColorsManger.black.withOpacity(.5),
+                                        borderRadius: BorderRadius.circular(
+                                            AppSize.size12),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: ColorsManger.black
+                                                .withOpacity(.2),
+                                            blurRadius: 10,
+                                            offset: Offset(0, 5),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (messages[index]['chat_image'] !=
+                                                    null ||
+                                                messages[index]['chat_image'] ==
+                                                    "")
+                                              FadeIn(
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          AppSize.size12),
+                                                  child: Image.network(
+                                                    messages[index]
+                                                        ['chat_image'],
+                                                    fit: BoxFit.scaleDown,
+                                                    errorBuilder:
+                                                        (context, url, error) {
+                                                      return Icon(Icons.error);
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                              messages[index].data()['message'],
+                                              style: getMediumTextStyle(
+                                                  color: ColorsManger.white,
+                                                  fontSize: FontSize.medium),
+                                            ),
+                                            Text(
+                                                messages[index]
+                                                            .data()['time'] !=
+                                                        null
+                                                    ? timeago.format(
+                                                        DateTime.fromMillisecondsSinceEpoch(
+                                                            int.parse(messages[
+                                                                    index]
+                                                                .data()['time']
+                                                                .toString())),
+                                                        locale: 'en')
+                                                    : "a long time ago",
+                                                style: getLightTextStyle(
+                                                    color: ColorsManger.grey,
+                                                    fontSize: FontSize.xsmall)),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],

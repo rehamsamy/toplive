@@ -1,14 +1,16 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:get/get.dart';
 
 import 'package:toplive/app/modules/auth/views/auth_view.dart';
 import 'package:toplive/app/modules/bottom_nav_bar/views/bottom_nav_bar_view.dart';
 import 'package:toplive/app/modules/chat/views/chat_view.dart';
 import 'package:toplive/app/modules/events/views/events_view.dart';
+import 'package:toplive/app/modules/friends/bindings/friends_binding.dart';
+import 'package:toplive/app/modules/friends/views/friends_view.dart';
 import 'package:toplive/app/modules/home/views/home_view.dart';
 import 'package:toplive/app/modules/profile/views/profile_view.dart';
 import 'package:toplive/app/modules/room/views/room_view.dart';
+
+// ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
 
@@ -45,6 +47,11 @@ class AppPages {
     GetPage(
       name: _Paths.EVENTS,
       page: () => EventsView(),
+    ),
+    GetPage(
+      name: _Paths.FRIENDS,
+      page: () => FriendsView(),
+      binding: FriendsBinding(),
     ),
   ];
 }

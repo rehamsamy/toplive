@@ -13,7 +13,7 @@ class ProfileImage extends GetWidget<ProfileController> {
     return GestureDetector(
       onTap: () async {
         controller.profileImage = await ImagePicker().pickImage(
-            source: ImageSource.camera,
+            source: ImageSource.gallery,
             preferredCameraDevice: CameraDevice.front);
       },
       child: ClipRRect(

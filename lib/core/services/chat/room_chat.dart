@@ -10,9 +10,10 @@ class RoomChatService {
   CollectionReference rooms = FirebaseFirestore.instance.collection('rooms');
 
   Future<String> _uploadFile(File image, String fileName) async {
-    Reference reference = firebaseStorage.ref().child(fileName);
-    UploadTask uploadTask = reference.putFile(image);
-    String downloadLink = await uploadTask.snapshot.ref.getDownloadURL();
+    Reference reference =
+        firebaseStorage.ref().child("room_messages/$fileName");
+    TaskSnapshot uploadTask = await reference.putFile(image);
+    String downloadLink = await uploadTask.ref.getDownloadURL();
     return downloadLink;
   }
 
@@ -29,7 +30,7 @@ class RoomChatService {
         .collection("rooms")
         .doc(roomId)
         .collection("messages")
-        //.orderBy("timestamp", descending: true)
+        // .orderBy("time", descending: true)
         .limit(limit)
         .snapshots();
   }
@@ -56,7 +57,7 @@ class RoomChatService {
       userImage: userImage,
       userName: userName,
       chatMessage: chatMessage,
-      chatImage: chatImage,
+      chatImage: chatImage ?? "",
       messageTime: DateTime.now(),
     );
 
