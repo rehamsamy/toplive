@@ -22,7 +22,7 @@ class BottomSheetActionButtonBottom extends StatelessWidget {
           width: context.width * 0.2,
           child: IconButton(
             icon: icon,
-            onPressed: () {},
+            onPressed: onPressed,
           )),
     );
   }

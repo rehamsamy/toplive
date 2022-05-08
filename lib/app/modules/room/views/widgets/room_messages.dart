@@ -87,7 +87,9 @@ class RoomMessages extends GetWidget<RoomController> {
                                           children: [
                                             if (messages[index]['chat_image'] !=
                                                     null ||
-                                                messages[index]['chat_image'] ==
+                                                messages[index]['chat_image']
+                                                        .toString()
+                                                        .trim() !=
                                                     "")
                                               FadeIn(
                                                 child: ClipRRect(
@@ -100,7 +102,7 @@ class RoomMessages extends GetWidget<RoomController> {
                                                     fit: BoxFit.scaleDown,
                                                     errorBuilder:
                                                         (context, url, error) {
-                                                      return Icon(Icons.error);
+                                                      return SizedBox();
                                                     },
                                                   ),
                                                 ),

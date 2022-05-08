@@ -24,6 +24,7 @@ class _ToggleBtnsState extends State<ToggleBtns> {
   late List<bool> isSelected = [];
   @override
   void initState() {
+    // ignore: unused_local_variable
     for (var e in widget.texts) {
       isSelected.add(false);
     }

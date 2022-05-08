@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ease/ease.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

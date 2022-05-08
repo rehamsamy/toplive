@@ -2,15 +2,14 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RoomService {
-  static const String _appId = "8c87b5bd9bb74c238838d9a380f6be4f";
-  static const String _channelName = "test_room";
-  static const String _token =
-      "0068c87b5bd9bb74c238838d9a380f6be4fIAC6DS8Wa41k/6JV1OAU1WrqvboPspMXR/O5uyrW53V2oVR75ncAAAAAEADQ1fuzOiFpYgEAAQA6IWli";
+  static const String _appId = "900170190e1c44028e728d407abf54a0";
+
   late RtcEngine engine;
   int? remoteUid;
   bool _isAudioMuted = false;
 
-  Future<int?> initAgora({required String channelName}) async {
+  Future<int?> initAgora(
+      {required String channelName, required ClientRole role}) async {
     await [
       Permission.speech,
       Permission.microphone,
@@ -22,14 +21,20 @@ class RoomService {
     await engine.enableAudio();
     await engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
     await engine.setEnableSpeakerphone(true);
-    await engine.setClientRole(ClientRole.Audience);
+
+    await engine.setClientRole(role);
 
     // await engine.setDefaultAudioRoutetoSpeakerphone(true);
 
-    await engine.joinChannel(_token, _channelName, null, 0);
+    await engine.joinChannel(null, channelName, null, 0);
     print("user_joined");
 
     return remoteUid;
+  }
+
+  leaveRoomAndClose() async {
+    await engine.leaveChannel();
+    await engine.destroy();
   }
 
   muteAudioSwitcher() async {
