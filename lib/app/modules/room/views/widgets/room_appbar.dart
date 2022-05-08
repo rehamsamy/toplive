@@ -140,7 +140,7 @@ class _BackButtonDialogState extends State<BackButtonDialog> {
                     height: 10,
                   ),
                   ListTile(
-                      title: Text("Exit ",
+                      title: Text("Exit without leaving the room",
                           style: getMediumTextStyle(color: ColorsManger.white)),
                       leading: Icon(Icons.exit_to_app,
                           color: ColorsManger.white, size: 30),

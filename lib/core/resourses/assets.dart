@@ -17,10 +17,6 @@ class Assets {
   /// assets/fonts/Tajawal-Regular.ttf
   static const String assetsFontsTajawalRegular = "assets/fonts/Tajawal-Regular.ttf";
 
-  /// Assets for assetsImages4
-  /// assets/images/4.png
-  static const String assetsImages4 = "assets/images/4.png";
-
   /// Assets for assetsImagesAuthBackground
   /// assets/images/auth_background.png
   static const String assetsImagesAuthBackground = "assets/images/auth_background.png";
@@ -81,13 +77,17 @@ class Assets {
   /// assets/images/logout.png
   static const String assetsImagesLogout = "assets/images/logout.png";
 
+  /// Assets for assetsImagesMagiccard
+  /// assets/images/magiccard.png
+  static const String assetsImagesMagiccard = "assets/images/magiccard.png";
+
+  /// Assets for assetsImagesMessaging
+  /// assets/images/messaging.png
+  static const String assetsImagesMessaging = "assets/images/messaging.png";
+
   /// Assets for assetsImagesMobile
   /// assets/images/mobile.png
   static const String assetsImagesMobile = "assets/images/mobile.png";
-
-  /// Assets for assetsImagesPngegg
-  /// assets/images/pngegg.png
-  static const String assetsImagesPngegg = "assets/images/pngegg.png";
 
   /// Assets for assetsImagesRoomBackground
   /// assets/images/room_background.png
