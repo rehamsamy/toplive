@@ -22,6 +22,10 @@ class ChatBar extends GetWidget<RoomController> {
         padding: const EdgeInsets.all(8.0),
         child: Row(children: [
           IconButton(
+            icon: Image.asset(Assets.assetsImagesGiftbox),
+            onPressed: () {},
+          ),
+          IconButton(
             icon: Image.asset(Assets.assetsImagesUploadImg),
             onPressed: () async {
               XFile? pickedFile =

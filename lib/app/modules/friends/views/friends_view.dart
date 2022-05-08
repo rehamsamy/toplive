@@ -1,3 +1,4 @@
+import 'package:ease/animations/hero_page_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,8 +10,8 @@ import 'package:toplive/core/resourses/font_manger.dart';
 import 'package:toplive/core/resourses/styles_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';
 
-import '../../../../core/resourses/assets.dart';
 import '../controllers/friends_controller.dart';
+import 'add_friend.dart';
 
 class FriendsView extends GetView<FriendsController> {
   @override
@@ -106,28 +107,36 @@ class FriendsView extends GetView<FriendsController> {
                             ],
                           ),
                         ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: ColorsManger.primary,
-                          ),
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.person_add,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: AppSize.size8,
-                              ),
-                              Text(
-                                "Add Friends",
-                                style: getMediumTextStyle(
-                                  color: ColorsManger.white,
-                                  fontSize: FontSize.large,
+                        Hero(
+                          tag: "add_friend",
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: ColorsManger.primary,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  HeroDialogRoute(
+                                      builder: (context) => AddFriend()));
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person_add,
+                                  color: Colors.white,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: AppSize.size8,
+                                ),
+                                Text(
+                                  "Add Friends",
+                                  style: getMediumTextStyle(
+                                    color: ColorsManger.white,
+                                    fontSize: FontSize.large,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -137,7 +146,7 @@ class FriendsView extends GetView<FriendsController> {
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
-              return Center(child: CircularProgressIndicator());
+              return Center(child: loading);
             },
           )),
     );

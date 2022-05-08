@@ -64,6 +64,7 @@ class RoomMessages extends GetWidget<RoomController> {
                                       height: 5,
                                     ),
                                     Container(
+                                      width: context.width * 0.5,
                                       decoration: BoxDecoration(
                                         color:
                                             ColorsManger.black.withOpacity(.5),

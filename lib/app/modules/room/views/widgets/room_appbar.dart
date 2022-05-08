@@ -140,7 +140,7 @@ class _BackButtonDialogState extends State<BackButtonDialog> {
                     height: 10,
                   ),
                   ListTile(
-                      title: Text("Exit room",
+                      title: Text("Exit ",
                           style: getMediumTextStyle(color: ColorsManger.white)),
                       leading: Icon(Icons.exit_to_app,
                           color: ColorsManger.white, size: 30),
@@ -151,13 +151,11 @@ class _BackButtonDialogState extends State<BackButtonDialog> {
                     height: 10,
                   ),
                   ListTile(
-                      title: Text("Exit from app",
+                      title: Text("Exit room",
                           style: getMediumTextStyle(color: ColorsManger.white)),
                       leading:
                           Image.asset(Assets.assetsImagesLogout, width: 30),
-                      onTap: () {
-                        exit(0);
-                      }),
+                      onTap: () {}),
                 ],
               ),
             ),

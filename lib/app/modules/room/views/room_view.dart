@@ -72,13 +72,6 @@ class _RoomViewState extends State<RoomView> {
                       icon: Image.asset(Assets.assetsImagesSendMessage),
                       onPressed: () {},
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    IconButton(
-                      icon: Image.asset(Assets.assetsImagesGiftbox),
-                      onPressed: () {},
-                    ),
                   ],
                 ),
               ),
