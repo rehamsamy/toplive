@@ -1,11 +1,5 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:toplive/app/data/models/chat_room_model.dart';
-import 'package:toplive/app/modules/home/controllers/home_controller.dart';
-
-import '../../../app/data/models/chat_message_firebase_model.dart';
 import '../../../app/data/models/private_chat_message.dart';
 
 class PrivateChatService {
@@ -22,11 +16,6 @@ class PrivateChatService {
         .orderBy('lastChat', descending: true)
         .snapshots()
         .map(ChatRoom().fromQuery);
-    /*return chatCollection
-        .where('userA', isEqualTo: myId)
-        .orderBy('lastChat', descending: true)
-        .snapshots()
-        .map(ChatRoom().fromQuery);*/
   }
 
   String getRoomId() {
@@ -49,7 +38,7 @@ class PrivateChatService {
 
   //post PrivateMessage <Message>
   Future<void> postPrivateMessage(
-      {PrivateMessage? PrivateMessage,
+      {PrivateMessage? privateMessage,
       String? userA,
       String? userB,
       String? aName,
@@ -74,20 +63,20 @@ class PrivateChatService {
                     bImage: bImage,
                     bName: bName,
                     keywords: keyword,
-                    lastMsg: PrivateMessage!.text,
-                    lastSender: PrivateMessage.sender,
-                    lastChat: PrivateMessage.time)
+                    lastMsg: privateMessage!.text,
+                    lastSender: privateMessage.sender,
+                    lastChat: privateMessage.time)
                 .toJson())
             .then((doc) async {
           await newPrivateMessage
-              .set(PrivateMessage.toJson())
+              .set(privateMessage.toJson())
               .then((doc) async {
             print('hop ${newPrivateMessage.id}');
             //update the chat room
             await chatCollection.doc(getRoomId()).update({
-              'lastChat': PrivateMessage.time,
-              'lastMsg': PrivateMessage.text,
-              'lastSender': PrivateMessage.sender,
+              'lastChat': privateMessage.time,
+              'lastMsg': privateMessage.text,
+              'lastSender': privateMessage.sender,
               'aName': aName,
               'bName': bName,
               'aImage': aImage,
@@ -102,14 +91,14 @@ class PrivateChatService {
           print(error);
         });
       } else {
-        await newPrivateMessage.set(PrivateMessage!.toJson()).then((doc) async {
+        await newPrivateMessage.set(privateMessage!.toJson()).then((doc) async {
           print('hop ${newPrivateMessage.id}');
 
           //update the chat room
           await chatCollection.doc(getRoomId()).update({
-            'lastChat': PrivateMessage.time,
-            'lastMsg': PrivateMessage.text,
-            'lastSender': PrivateMessage.sender,
+            'lastChat': privateMessage.time,
+            'lastMsg': privateMessage.text,
+            'lastSender': privateMessage.sender,
             'aName': aName,
             'bName': bName,
             'aImage': aImage,
