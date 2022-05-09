@@ -10,6 +10,8 @@ import 'package:toplive/core/resourses/font_manger.dart';
 import 'package:toplive/core/resourses/styles_manger.dart';
 import 'package:toplive/core/resourses/values_manger.dart';
 
+import '../../chat/views/chat_screen.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/friends_controller.dart';
 import 'add_friend.dart';
 
@@ -67,7 +69,36 @@ class FriendsView extends GetView<FriendsController> {
                                           BorderRadius.circular(AppSize.size18),
                                       gradient: ColorsManger.buttonGradient),
                                   child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => ChatScreen(
+                                                      myId: user?.data?.id
+                                                              .toString() ??
+                                                          "",
+                                                      hisId: friends?.data
+                                                              ?.elementAt(index)
+                                                              .id
+                                                              .toString() ??
+                                                          '',
+                                                      hisName: friends?.data
+                                                              ?.elementAt(index)
+                                                              .name ??
+                                                          ''
+                                                              "",
+                                                      hisImage: friends?.data
+                                                              ?.elementAt(index)
+                                                              .image ??
+                                                          '',
+                                                      myName: user?.data?.name
+                                                              .toString() ??
+                                                          "",
+                                                      myImage: user?.data?.image
+                                                              .toString() ??
+                                                          "",
+                                                    )));
+                                      },
                                       child: Text(
                                         "Message",
                                         style: getMediumTextStyle(
