@@ -71,24 +71,36 @@ class ChatBar extends GetWidget<RoomController> {
                 hintText: "message",
                 hintStyle: getLightTextStyle(color: Colors.white70)),
           )),
-          controller.isRoomSpeaker
-              ? IconButton(
+          GetBuilder(
+            builder: (RoomController controller) {
+              if (controller.isRoomSpeaker) {
+                return IconButton(
                   icon: Icon(
                     Icons.mic,
                     color: Colors.white,
                   ),
                   onPressed: () => RoomService().muteAudioSwitcher(),
-                )
-              : SizedBox(),
-          controller.isRoomSpeaker
-              ? IconButton(
+                );
+              } else {
+                return SizedBox();
+              }
+            },
+          ),
+          GetBuilder(
+            builder: (RoomController controller) {
+              if (controller.isRoomSpeaker) {
+                return IconButton(
                   icon: Icon(
                     Icons.speaker,
                     color: Colors.white,
                   ),
                   onPressed: () => RoomService().speakerAudioSwitcher(),
-                )
-              : SizedBox(),
+                );
+              } else {
+                return SizedBox();
+              }
+            },
+          )
         ]),
       ),
     );

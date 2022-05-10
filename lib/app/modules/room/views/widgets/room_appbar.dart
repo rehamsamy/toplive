@@ -93,12 +93,15 @@ class RoomAppBar extends GetWidget<RoomController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.network(
-                      controller.room.roomImage.toString(),
-                      width: 50,
-                      errorBuilder: (context, url, error) {
-                        return Icon(Icons.error);
-                      },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(2),
+                      child: Image.network(
+                        controller.room.roomImage.toString(),
+                        width: 50,
+                        errorBuilder: (context, url, error) {
+                          return Icon(Icons.error);
+                        },
+                      ),
                     ),
                   ),
                 ]),

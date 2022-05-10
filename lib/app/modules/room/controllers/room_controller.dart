@@ -10,6 +10,8 @@ import 'package:toplive/core/services/agora_room_service.dart';
 import 'package:flutter/material.dart';
 import 'package:toplive/core/services/chat/room_chat.dart';
 
+import '../../../data/models/chat_message_firebase_model.dart';
+
 class RoomController extends GetxController {
   ScrollController scrollController = ScrollController();
   late RoomModel room = RoomModel.fromJson(Get.arguments);
@@ -47,20 +49,20 @@ class RoomController extends GetxController {
 
     RoomChatService().getFlyingStream(room.id.toString(), 2, Get.context!);
     isRoomOwner = room.id.toString() == user?.data?.id.toString();
-    /*RoomChatService().addOrUpdateUser(
+    RoomChatService().addOrUpdateUser(
         roomId: room.id.toString(),
         user: FirebaseChatUser(
             id: user?.data?.id.toString() ?? "",
             lastActiveAt: DateTime.now(),
-            isblocked: false,
-            role: "visitor",
+            //isblocked: false,
+            //role: "visitor",
             image: user?.data?.image.toString() ?? "",
             isHere: true,
             name: user?.data?.name.toString() ?? ""));
     users = RoomChatService().getChatUsersStream(
         room.id.toString(), room.microphones!.toInt(), Get.context!);
     room.user?.id.toString() == user?.data?.id.toString();
-*/
+
     print('onInit');
     //print("Room ID :" + room.id.toString());
     await RoomService()

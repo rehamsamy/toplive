@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
@@ -31,7 +32,7 @@ class RoomUsers extends GetWidget<RoomController> {
               controller.speakers = hosts
                   .where((element) => (element["isSpeaker"] == true))
                   .toList();
-
+              controller.update;
               controller.isRoomSpeakerPermissionAllowed = hosts
                   .where((element) =>
                       (element["role"] == "owner" ||
@@ -77,8 +78,7 @@ class RoomUsers extends GetWidget<RoomController> {
                             ]),
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white12,
-                      ),
+                          color: Colors.white12, shape: BoxShape.circle),
                     ),
                     Expanded(
                       child: ListView.builder(
@@ -151,33 +151,108 @@ class RoomUsers extends GetWidget<RoomController> {
         const SizedBox(
           height: 5,
         ),
-        Wrap(
-            runAlignment: WrapAlignment.start,
-            alignment: WrapAlignment.start,
-            runSpacing: AppSize.size8,
-            spacing: AppSize.size8,
-            children: [
-              ...List.generate(
-                  controller.speakers.length,
-                  (index) => GestureDetector(
-                        onTap: () {
-                          Get.bottomSheet(UserBottomSheet(
-                              controller.speakers[index]['id']! ?? "",
-                              controller.speakers[index]['name']! ?? "",
-                              controller.speakers[index]['image']! ?? ""));
-                        },
-                        child: Container(
-                          height: 80,
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.network(
-                                  controller.speakers[index]['image']!
-                                      .toString(),
-                                  width: MediaQuery.of(context).size.width / 6,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(
+        GetBuilder<RoomController>(
+          initState: (_) {},
+          builder: (RoomController controller) {
+            return Wrap(
+                runAlignment: WrapAlignment.start,
+                alignment: WrapAlignment.start,
+                runSpacing: AppSize.size8,
+                spacing: AppSize.size8,
+                children: [
+                  ...List.generate(
+                      controller.speakers.length,
+                      (index) => GestureDetector(
+                            onTap: () {
+                              Get.bottomSheet(UserBottomSheet(
+                                  controller.speakers[index]['id']! ?? "",
+                                  controller.speakers[index]['name']! ?? "",
+                                  controller.speakers[index]['image']! ?? ""));
+                            },
+                            child: ZoomIn(
+                              child: Container(
+                                height: 80,
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Image.network(
+                                        controller.speakers[index]['image']!
+                                            .toString(),
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                6,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              6,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              6,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white12),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.mic,
+                                              color: ColorsManger.grey1,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        controller.speakers[index]['name']! ??
+                                            "",
+                                        style: getMediumTextStyle(
+                                            color: ColorsManger.grey1),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )),
+                  ...List.generate(
+                      controller.room.microphones!.toInt() -
+                          controller.speakers.length,
+                      (index) => GestureDetector(
+                            onTap: () {
+                              if (controller.isRoomSpeakerPermissionAllowed) {
+                                RoomChatService().addOrUpdateUser(
+                                    roomId: controller.room.id.toString(),
+                                    user: FirebaseChatUser(
+                                        id: user?.data?.id.toString() ?? "",
+                                        image:
+                                            user?.data?.image.toString() ?? "",
+                                        isHere: true,
+                                        isKicked: false,
+                                        isSpeaker: true,
+                                        isblocked: false,
+                                        name: user?.data?.name.toString() ?? "",
+                                        role: controller.isRoomOwner
+                                            ? "owner"
+                                            : "admin",
+                                        lastActiveAt: DateTime.now()));
+                                RoomService().speakerAudioSwitcher();
+                                controller.isRoomSpeaker = true;
+                                controller.update();
+                              } else
+                                null; //TODO: Request owner permission
+                            },
+                            child: Container(
+                              height: 80,
+                              child: Column(
+                                children: [
+                                  Container(
                                     height:
                                         MediaQuery.of(context).size.width / 6,
                                     width:
@@ -188,77 +263,21 @@ class RoomUsers extends GetWidget<RoomController> {
                                     child: Center(
                                       child: Icon(
                                         Icons.mic,
-                                        color: ColorsManger.grey1,
+                                        color:
+                                            ColorsManger.white.withOpacity(.6),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  controller.speakers[index]['name']! ??
-                                      "$index",
-                                  style: getMediumTextStyle(
-                                      color: ColorsManger.grey1),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )),
-              ...List.generate(
-                  controller.room.microphones!.toInt() -
-                      controller.speakers.length,
-                  (index) => GestureDetector(
-                        onTap: () {
-                          if (controller.isRoomSpeakerPermissionAllowed) {
-                            RoomChatService().addOrUpdateUser(
-                                roomId: controller.room.id.toString(),
-                                user: FirebaseChatUser(
-                                    id: user?.data?.id.toString() ?? "",
-                                    image: user?.data?.image.toString() ?? "",
-                                    isHere: true,
-                                    isKicked: false,
-                                    isSpeaker: true,
-                                    isblocked: false,
-                                    name: user?.data?.name.toString() ?? "",
-                                    role: controller.isRoomOwner
-                                        ? "owner"
-                                        : "admin",
-                                    lastActiveAt: DateTime.now()));
-                            RoomService().speakerAudioSwitcher();
-                            controller.isRoomSpeaker = true;
-                          } else
-                            null; //TODO: Request owner permission
-                        },
-                        child: Container(
-                          height: 80,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: MediaQuery.of(context).size.width / 6,
-                                width: MediaQuery.of(context).size.width / 6,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white12),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.mic,
-                                    color: ColorsManger.white.withOpacity(.6),
+                                  const SizedBox(
+                                    height: 5,
                                   ),
-                                ),
+                                ],
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )),
-            ])
+                            ),
+                          )),
+                ]);
+          },
+        )
       ]),
     );
   }

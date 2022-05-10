@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
 import 'package:toplive/app/data/remote_data_sources/friends_apis.dart';
+import 'package:toplive/app/modules/home/controllers/home_controller.dart';
 import 'package:toplive/app/modules/room/controllers/room_controller.dart';
 import 'package:toplive/app/modules/room/views/widgets/bottom_sheet_action_button.dart';
+import 'package:toplive/core/services/chat/room_chat.dart';
 
 import '../../../../../core/resourses/assets.dart';
 import '../../../../../core/resourses/color_manger.dart';
@@ -83,10 +86,18 @@ class UserBottomSheet extends GetWidget<RoomController> {
                   await FriendsApis().sendFriendRequest(int.parse(userId));
                 }),
             BottomSheetActionButtonBottom(
+                onPressed: () {
+                  RoomChatService().addOrUpdateUser(
+                      roomId: controller.room.id.toString(),
+                      user: FirebaseChatUser(
+                          id: user?.data?.id.toString() ?? "",
+                          lastActiveAt: DateTime.now(),
+                          isSpeaker: false));
+                },
                 icon: Icon(
-              Icons.mic_rounded,
-              color: Colors.white,
-            )),
+                  Icons.mic_rounded,
+                  color: Colors.white,
+                )),
             BottomSheetActionButtonBottom(
                 icon: Icon(
               Icons.block,
