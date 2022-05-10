@@ -16,7 +16,7 @@ class RoomMessages extends GetWidget<RoomController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
+      height: context.height * .44,
       child: StreamBuilder(
         stream:
             RoomChatService().getChatStream(controller.room.id.toString(), 50),

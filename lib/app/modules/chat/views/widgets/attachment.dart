@@ -36,7 +36,7 @@ class Attachment {
     String fluff = '';
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
       height: 70.0,
       // color: MyColors().mainColor,
       child: Row(
@@ -53,7 +53,7 @@ class Attachment {
                 fluff = value;
               },
               decoration: const InputDecoration.collapsed(
-                hintText: 'ارسل رسالة',
+                hintText: 'Send a message',
               ),
             ),
           ),
@@ -182,7 +182,7 @@ class Attachment {
     try {
       // set max high & width
       final file = await ImagePicker()
-          .getImage(source: ImageSource.gallery, imageQuality: 80);
+          .pickImage(source: ImageSource.gallery, imageQuality: 100);
       //to create new folder for each day
       final DateTime now = DateTime.now();
       final int millSeconds = now.millisecondsSinceEpoch;
@@ -272,6 +272,7 @@ class Attachment {
       aName = hisName;
       bName = myName;
       aImage = hisImage;
+
       bImage = myImage;
     }
 

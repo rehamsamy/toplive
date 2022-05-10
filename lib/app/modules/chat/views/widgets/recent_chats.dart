@@ -92,9 +92,10 @@ class _RecentChatsState extends State<RecentChats> {
             vertical: context.width * .02,
           ),
           decoration: BoxDecoration(
+              //TODO: ADD read and unread Colors
               color: chatRoom.lastSender != widget.myId
-                  ? const Color(0xFF84ae1a).withOpacity(0.8)
-                  : const Color(0xFFBed87d).withOpacity(0.8),
+                  ? Color.fromARGB(87, 78, 81, 241).withOpacity(0.8)
+                  : Color.fromARGB(255, 44, 59, 126).withOpacity(0.8),
               borderRadius: BorderRadius.circular(AppSize.size12)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

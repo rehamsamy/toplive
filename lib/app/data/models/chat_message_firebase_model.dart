@@ -1,5 +1,109 @@
 import 'dart:convert';
 
+class FirebaseChatUser {
+  String id;
+  String? name;
+  String? image;
+  String role;
+  DateTime lastActiveAt;
+  bool isHere;
+  bool isblocked;
+  FirebaseChatUser({
+    required this.id,
+    this.name,
+    this.image,
+    this.role = "visiter",
+    required this.lastActiveAt,
+    this.isHere = false,
+    this.isblocked = false,
+  });
+
+  FirebaseChatUser copyWith({
+    String? id,
+    String? name,
+    String? image,
+    String? role,
+    DateTime? lastActiveAt,
+    bool? isHere,
+    bool? isblocked,
+  }) {
+    return FirebaseChatUser(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      role: role ?? this.role,
+      lastActiveAt: lastActiveAt ?? this.lastActiveAt,
+      isHere: isHere ?? this.isHere,
+      isblocked: isblocked ?? this.isblocked,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'id': id});
+    if (name != null) {
+      result.addAll({'name': name});
+    }
+    if (image != null) {
+      result.addAll({'image': image});
+    }
+    result.addAll({'role': role});
+    result.addAll({'lastActiveAt': lastActiveAt.millisecondsSinceEpoch});
+    result.addAll({'isHere': isHere});
+    result.addAll({'isblocked': isblocked});
+
+    return result;
+  }
+
+  factory FirebaseChatUser.fromMap(Map<String, dynamic> map) {
+    return FirebaseChatUser(
+      id: map['id'] ?? '',
+      name: map['name'],
+      image: map['image'],
+      role: map['role'] ?? '',
+      lastActiveAt: DateTime.fromMillisecondsSinceEpoch(map['lastActiveAt']),
+      isHere: map['isHere'] ?? false,
+      isblocked: map['isblocked'] ?? false,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory FirebaseChatUser.fromJson(String source) =>
+      FirebaseChatUser.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'FirebaseChatUser(id: $id, name: $name, image: $image, role: $role, lastActiveAt: $lastActiveAt, isHere: $isHere, isblocked: $isblocked)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is FirebaseChatUser &&
+        other.id == id &&
+        other.name == name &&
+        other.image == image &&
+        other.role == role &&
+        other.lastActiveAt == lastActiveAt &&
+        other.isHere == isHere &&
+        other.isblocked == isblocked;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        image.hashCode ^
+        role.hashCode ^
+        lastActiveAt.hashCode ^
+        isHere.hashCode ^
+        isblocked.hashCode;
+  }
+}
+
 class FirebaseChatMessageModel {
   String? roomId;
   String? userImage;

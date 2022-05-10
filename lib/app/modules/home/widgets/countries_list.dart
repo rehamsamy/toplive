@@ -27,34 +27,37 @@ class AllCountriesList extends StatelessWidget {
                     offset: Offset(0, 3),
                   )
                 ]),
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
+                itemCount: itemsCount,
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    //height: 30,
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                            borderRadius: BorderRadius.circular(AppSize.size4),
+                            child: Image.network(
+                              countries?.data?.elementAt(index).flag ?? "",
+                              height: 30,
+                            )),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          countries?.data?.elementAt(index).name ?? "",
+                          style: getMediumTextStyle(),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-              itemCount: itemsCount,
-              itemBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  //height: 30,
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(AppSize.size4),
-                          child: Image.network(
-                            countries?.data?.elementAt(index).flag ?? "",
-                            height: 30,
-                          )),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        countries?.data?.elementAt(index).name ?? "",
-                        style: getMediumTextStyle(),
-                      ),
-                    ],
-                  ),
-                );
-              },
             ),
           );
         } else if (snapshot.hasError) {

@@ -1,8 +1,16 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
+import 'package:flutter/material.dart';
+import 'package:toplive/core/resourses/color_manger.dart';
+import 'package:toplive/core/resourses/styles_manger.dart';
+
+enum userRoles { owner, admin, member, visiter }
 
 class RoomChatService {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -33,6 +41,82 @@ class RoomChatService {
         // .orderBy("time", descending: true)
         .limit(limit)
         .snapshots();
+  }
+
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>> getNewlyJoinedUsers(
+      String roomId, int limit, BuildContext ctx) {
+    return firebaseFirestore
+        .collection("rooms")
+        .doc(roomId)
+        .collection("users")
+        // .orderBy("time", descending: true)
+        .limit(limit)
+        .snapshots()
+        .listen((event) {
+      MotionToast.info(
+              height: MediaQuery.of(ctx).size.height * 0.1,
+              animationType: ANIMATION.fromLeft,
+              enableAnimation: true,
+              position: MOTION_TOAST_POSITION.center,
+              animationDuration: Duration(milliseconds: 500),
+              toastDuration: Duration(seconds: 1),
+              description: Text("Joined the room"),
+              title: Text(event.docs.map((e) => e.data()['name']).toString()))
+          .show(ctx);
+    });
+  }
+
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>> getFlyingStream(
+      String roomId, int limit, BuildContext ctx) {
+    return firebaseFirestore
+        .collection("flying_messages")
+        .orderBy("time", descending: true)
+        .limit(1)
+        .snapshots()
+        .listen((event) {
+      MotionToast.info(
+          height: MediaQuery.of(ctx).size.height * 0.1,
+          animationType: ANIMATION.fromLeft,
+          enableAnimation: true,
+          position: MOTION_TOAST_POSITION.center,
+          animationCurve: Curves.easeIn,
+          animationDuration: Duration(milliseconds: 500),
+          toastDuration: Duration(seconds: 1),
+          description: Text("Joined the room"),
+          title: Text(
+            event.docs.map((e) => e.data()['name']).toString(),
+            style: getBoldTextStyle(color: ColorsManger.white),
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+          )).show(ctx);
+    });
+  }
+
+  Stream<QuerySnapshot> getChatUsersStream(
+      String roomId, int limit, BuildContext ctx) {
+    return firebaseFirestore
+        .collection("rooms")
+        .doc(roomId)
+        .collection("users")
+        .orderBy("lastActiveAt", descending: true)
+        .limit(limit)
+        .snapshots();
+  }
+
+  void addOrUpdateUser(
+      {required String roomId, required FirebaseChatUser user}) async {
+    DocumentReference documentReference = firebaseFirestore
+        .collection("rooms")
+        .doc(roomId)
+        .collection("users")
+        .doc(user.id);
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      transaction.set(
+        documentReference,
+        user.toMap(),
+      );
+    });
+    print("sent");
   }
 
   void sendMessage(

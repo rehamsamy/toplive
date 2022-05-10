@@ -1,6 +1,9 @@
 import 'package:ease/ease.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
+import 'package:toplive/app/modules/home/controllers/home_controller.dart';
+import 'package:toplive/core/services/chat/room_chat.dart';
 
 import '../../../../../core/resourses/assets.dart';
 import '../../../../../core/resourses/color_manger.dart';
@@ -57,7 +60,19 @@ class RoomAppBar extends GetWidget<RoomController> {
                     Icons.add_circle_rounded,
                     color: ColorsManger.grey1,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    RoomChatService().addOrUpdateUser(
+                        roomId: controller.room.id.toString(),
+                        user: FirebaseChatUser(
+                            id: user?.data?.id.toString() ?? "",
+                            image: user?.data?.image.toString() ?? "",
+                            isblocked: false,
+                            name: user?.data?.name.toString() ?? "",
+                            role: "owner",
+                            lastActiveAt: DateTime.now()));
+                    Get.snackbar("Joined",
+                        "You joined the room and your role is visitor");
+                  },
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

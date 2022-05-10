@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:toplive/app/modules/chat/views/chat_history.dart';
-import 'package:toplive/app/modules/chat/views/chat_view.dart';
 import 'package:toplive/app/modules/events/views/events_view.dart';
 import 'package:toplive/app/modules/friends/views/friends_view.dart';
 import 'package:toplive/core/resourses/assets.dart';

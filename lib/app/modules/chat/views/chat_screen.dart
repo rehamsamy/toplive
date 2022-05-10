@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toplive/core/constants/app_const.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
 import 'package:toplive/core/resourses/font_manger.dart';
 
@@ -73,7 +74,7 @@ class ChatScreenX extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(top: 10.0),
+                decoration: backgroundBoxDectoration,
                 child: ListView.builder(
                   reverse: true,
                   itemCount: getFluffs != null ? getFluffs.length : 0,

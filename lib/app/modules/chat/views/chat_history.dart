@@ -6,7 +6,7 @@ import '../../../data/models/chat_room_model.dart';
 import 'widgets/recent_chats.dart';
 
 class ChatHistory extends StatelessWidget {
-  String myId;
+  final String myId;
 
   ChatHistory({required this.myId});
 
