@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:get/get.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
@@ -111,13 +112,42 @@ class RoomChatService {
         .collection("users")
         .doc(user.id);
     FirebaseFirestore.instance.runTransaction((transaction) async {
-      transaction.set(
+      transaction.update(
         documentReference,
         user.toMap(),
       );
     });
     print("sent");
   }
+
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>> getAllSpeakerRequests(
+    String roomId,
+  ) {
+    return firebaseFirestore
+        .collection("rooms")
+        .doc(roomId)
+        .collection("users")
+        .where("role", whereIn: ["admin", "owner"])
+        .snapshots()
+        .listen((event) {
+          Get.defaultDialog(
+              title: "Speaker request",
+              middleText: event.docs.first.data()['name'] +
+                  " Has Requested to be a speaker  ",
+              textConfirm: "Accept",
+              onConfirm: () {},
+              textCancel: "Reject",
+              onCancel: () => Get.closeAllSnackbars());
+          print(event.docs.map((e) {
+            print(e.data()['name']);
+          }).toString());
+        });
+  }
+
+  void sendSpeakerRequest(
+    String roomId,
+    String currentUserId,
+  ) {}
 
   void sendMessage(
       {String? chatMessage,

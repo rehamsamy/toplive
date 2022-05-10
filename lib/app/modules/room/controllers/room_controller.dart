@@ -46,6 +46,7 @@ class RoomController extends GetxController {
   void init() async {
     super.onInit();
     engine = await RtcEngine.create("900170190e1c44028e728d407abf54a0");
+    RoomChatService().getAllSpeakerRequests(room.id.toString());
 
     RoomChatService().getFlyingStream(room.id.toString(), 2, Get.context!);
     isRoomOwner = room.id.toString() == user?.data?.id.toString();
@@ -71,7 +72,6 @@ class RoomController extends GetxController {
       remoteUid = value[0];
       engine = value[1];
     });
-
     print("agora_started");
     Future.delayed(Duration(seconds: 1), () {
       scrollDownAndClearTextField();

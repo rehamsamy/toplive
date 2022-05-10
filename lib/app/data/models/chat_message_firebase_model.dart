@@ -4,7 +4,7 @@ class FirebaseChatUser {
   String id;
   String? name;
   String? image;
-  String role;
+  String? role;
   DateTime lastActiveAt;
   bool isKicked;
   DateTime? kickedAt;
@@ -16,7 +16,7 @@ class FirebaseChatUser {
     required this.id,
     this.name,
     this.image,
-    this.role = "visiter",
+    this.role,
     required this.lastActiveAt,
     this.isKicked = false,
     this.kickedAt,
@@ -61,14 +61,13 @@ class FirebaseChatUser {
     if (image != null) {
       result.addAll({'image': image});
     }
-    result.addAll({'role': role});
+    if (role != null) {
+      result.addAll({'role': role});
+    }
     result.addAll({'lastActiveAt': lastActiveAt.millisecondsSinceEpoch});
     result.addAll({'isKicked': isKicked});
     if (kickedAt != null) {
       result.addAll({'kickedAt': kickedAt!.millisecondsSinceEpoch});
-    } else {
-      result.addAll(
-          {'kickedAt': DateTime.parse("1970-01-01").millisecondsSinceEpoch});
     }
     result.addAll({'isSpeaker': isSpeaker});
     result.addAll({'isHere': isHere});
@@ -82,7 +81,7 @@ class FirebaseChatUser {
       id: map['id'] ?? '',
       name: map['name'],
       image: map['image'],
-      role: map['role'] ?? '',
+      role: map['role'],
       lastActiveAt: DateTime.fromMillisecondsSinceEpoch(map['lastActiveAt']),
       isKicked: map['isKicked'] ?? false,
       kickedAt: map['kickedAt'] != null

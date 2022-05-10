@@ -226,7 +226,8 @@ class RoomUsers extends GetWidget<RoomController> {
                           controller.speakers.length,
                       (index) => GestureDetector(
                             onTap: () {
-                              if (controller.isRoomSpeakerPermissionAllowed) {
+                              if (controller.isRoomSpeakerPermissionAllowed &&
+                                  !controller.isRoomSpeaker) {
                                 RoomChatService().addOrUpdateUser(
                                     roomId: controller.room.id.toString(),
                                     user: FirebaseChatUser(
@@ -245,8 +246,9 @@ class RoomUsers extends GetWidget<RoomController> {
                                 RoomService().speakerAudioSwitcher();
                                 controller.isRoomSpeaker = true;
                                 controller.update();
-                              } else
-                                null; //TODO: Request owner permission
+                              } else {
+                                null;
+                              }
                             },
                             child: Container(
                               height: 80,
