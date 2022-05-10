@@ -67,7 +67,6 @@ class RoomsWidget extends StatelessWidget {
                                     Center(
                                   child: Icon(
                                     Icons.error,
-                                    // size: 30,
                                   ),
                                 ),
                                 fit: BoxFit.cover,

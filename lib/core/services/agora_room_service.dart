@@ -1,51 +1,56 @@
 import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:toplive/app/modules/room/controllers/room_controller.dart';
 
-class RoomService {
+class RoomService extends GetxService {
+  final RoomController controller = Get.find<RoomController>();
   static const String _appId = "900170190e1c44028e728d407abf54a0";
 
-  late RtcEngine engine;
   int? remoteUid;
   bool _isAudioMuted = false;
 
-  Future<int?> initAgora(
+  Future<List> initAgora(
       {required String channelName, required ClientRole role}) async {
     await [
       Permission.speech,
       Permission.microphone,
       Permission.notification,
     ].request();
-    engine = await RtcEngine.create(_appId);
-    await engine.leaveChannel();
-    engine.setEventHandler(_rtcEventHandler());
-    await engine.enableAudio();
-    await engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await engine.setEnableSpeakerphone(true);
+    controller.engine = await RtcEngine.create(_appId);
+    await controller.engine.leaveChannel();
+    controller.engine.setEventHandler(_rtcEventHandler());
+    await controller.engine.enableAudio();
+    await controller.engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await controller.engine.setEnableSpeakerphone(true);
 
-    await engine.setClientRole(role);
+    await controller.engine.setClientRole(role);
 
     // await engine.setDefaultAudioRoutetoSpeakerphone(true);
 
-    await engine.joinChannel(null, channelName, null, 0);
+    await controller.engine.joinChannel(null, channelName, null, 0);
     print("user_joined");
 
-    return remoteUid;
+    return [remoteUid, controller.engine];
   }
 
   leaveRoomAndClose() async {
-    await engine.leaveChannel();
-    await engine.destroy();
+    await controller.engine.leaveChannel();
+    await controller.engine.destroy();
   }
 
   muteAudioSwitcher() async {
-    await engine.muteLocalAudioStream(!_isAudioMuted ? true : false);
+    await controller.engine.muteLocalAudioStream(!_isAudioMuted ? true : false);
     _isAudioMuted = !_isAudioMuted;
   }
 
   speakerAudioSwitcher() async {
-    await engine.isSpeakerphoneEnabled() ?? true
-        ? await engine.setEnableSpeakerphone(false)
-        : await engine.setEnableSpeakerphone(true);
+    await controller.engine.isSpeakerphoneEnabled() ?? false
+        ? await controller.engine.setEnableSpeakerphone(false)
+        : await controller.engine.setEnableSpeakerphone(true);
+    await controller.engine.isSpeakerphoneEnabled() ?? false
+        ? controller.engine.setClientRole(ClientRole.Broadcaster)
+        : controller.engine.setClientRole(ClientRole.Audience);
   }
 
   RtcEngineEventHandler _rtcEventHandler() {

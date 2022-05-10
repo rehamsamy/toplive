@@ -16,93 +16,100 @@ class RoomAppBar extends GetWidget<RoomController> {
   const RoomAppBar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: AppSize.size8,
-        ),
-        Row(
-          children: [
-            const SizedBox(
-              width: AppSize.size12,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                    HeroDialogRoute(builder: (context) => BackButtonDialog()));
-              },
-              child: Hero(
-                tag: 'room_appbar_back',
-                child: Image.asset(
-                  Assets.assetsImagesLogout,
-                  width: 30,
-                ),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.12,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: AppSize.size8,
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: AppSize.size12,
               ),
-            ),
-            Container(
-              //padding: EdgeInsets.symmetric(horizontal: 20),
-              child: IconButton(
-                icon: Icon(Icons.more_horiz_rounded, color: ColorsManger.grey1),
-                onPressed: () {},
-              ),
-            ),
-            Spacer(),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.black38,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    bottomLeft: Radius.circular(50)),
-              ),
-              child: Row(children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.add_circle_rounded,
-                    color: ColorsManger.grey1,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(HeroDialogRoute(
+                      builder: (context) => BackButtonDialog()));
+                },
+                child: Hero(
+                  tag: 'room_appbar_back',
+                  child: Image.asset(
+                    Assets.assetsImagesLogout,
+                    width: 30,
                   ),
-                  onPressed: () {
-                    RoomChatService().addOrUpdateUser(
-                        roomId: controller.room.id.toString(),
-                        user: FirebaseChatUser(
-                            id: user?.data?.id.toString() ?? "",
-                            image: user?.data?.image.toString() ?? "",
-                            isblocked: false,
-                            name: user?.data?.name.toString() ?? "",
-                            role: "owner",
-                            lastActiveAt: DateTime.now()));
-                    Get.snackbar("Joined",
-                        "You joined the room and your role is visitor");
-                  },
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      controller.room.roomName.toString(),
-                      style: getMediumTextStyle(color: ColorsManger.grey1),
+              ),
+              Container(
+                //padding: EdgeInsets.symmetric(horizontal: 20),
+                child: IconButton(
+                  icon:
+                      Icon(Icons.more_horiz_rounded, color: ColorsManger.grey1),
+                  onPressed: () {},
+                ),
+              ),
+              Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black38,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      bottomLeft: Radius.circular(50)),
+                ),
+                child: Row(children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.add_circle_rounded,
+                      color: ColorsManger.grey1,
                     ),
-                    SelectableText("ID: " + controller.room.id.toString(),
-                        style: getMediumTextStyle(color: ColorsManger.grey1))
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network(
-                    controller.room.roomImage.toString(),
-                    width: 50,
-                    errorBuilder: (context, url, error) {
-                      return Icon(Icons.error);
+                    onPressed: () {
+                      RoomChatService().addOrUpdateUser(
+                          roomId: controller.room.id.toString(),
+                          user: FirebaseChatUser(
+                              id: user?.data?.id.toString() ?? "",
+                              image: user?.data?.image.toString() ?? "",
+                              isHere: true,
+                              isSpeaker: false,
+                              isKicked: false,
+                              isblocked: false,
+                              name: user?.data?.name.toString() ?? "",
+                              role: "admin",
+                              lastActiveAt: DateTime.now()));
+                      Get.snackbar("Joined", "You are now a room member",
+                          colorText: ColorsManger.grey2);
                     },
                   ),
-                ),
-              ]),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-      ],
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        controller.room.roomName.toString(),
+                        style: getMediumTextStyle(color: ColorsManger.grey1),
+                      ),
+                      SelectableText("ID: " + controller.room.id.toString(),
+                          style: getMediumTextStyle(color: ColorsManger.grey1))
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(
+                      controller.room.roomImage.toString(),
+                      width: 50,
+                      errorBuilder: (context, url, error) {
+                        return Icon(Icons.error);
+                      },
+                    ),
+                  ),
+                ]),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
     );
   }
 }

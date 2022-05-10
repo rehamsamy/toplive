@@ -6,6 +6,10 @@ class FirebaseChatUser {
   String? image;
   String role;
   DateTime lastActiveAt;
+  bool isKicked;
+  DateTime? kickedAt;
+
+  bool isSpeaker;
   bool isHere;
   bool isblocked;
   FirebaseChatUser({
@@ -14,6 +18,9 @@ class FirebaseChatUser {
     this.image,
     this.role = "visiter",
     required this.lastActiveAt,
+    this.isKicked = false,
+    this.kickedAt,
+    this.isSpeaker = false,
     this.isHere = false,
     this.isblocked = false,
   });
@@ -24,6 +31,9 @@ class FirebaseChatUser {
     String? image,
     String? role,
     DateTime? lastActiveAt,
+    bool? isKicked,
+    DateTime? kickedAt,
+    bool? isSpeaker,
     bool? isHere,
     bool? isblocked,
   }) {
@@ -33,6 +43,9 @@ class FirebaseChatUser {
       image: image ?? this.image,
       role: role ?? this.role,
       lastActiveAt: lastActiveAt ?? this.lastActiveAt,
+      isKicked: isKicked ?? this.isKicked,
+      kickedAt: kickedAt ?? this.kickedAt,
+      isSpeaker: isSpeaker ?? this.isSpeaker,
       isHere: isHere ?? this.isHere,
       isblocked: isblocked ?? this.isblocked,
     );
@@ -50,6 +63,14 @@ class FirebaseChatUser {
     }
     result.addAll({'role': role});
     result.addAll({'lastActiveAt': lastActiveAt.millisecondsSinceEpoch});
+    result.addAll({'isKicked': isKicked});
+    if (kickedAt != null) {
+      result.addAll({'kickedAt': kickedAt!.millisecondsSinceEpoch});
+    } else {
+      result.addAll(
+          {'kickedAt': DateTime.parse("1970-01-01").millisecondsSinceEpoch});
+    }
+    result.addAll({'isSpeaker': isSpeaker});
     result.addAll({'isHere': isHere});
     result.addAll({'isblocked': isblocked});
 
@@ -63,6 +84,11 @@ class FirebaseChatUser {
       image: map['image'],
       role: map['role'] ?? '',
       lastActiveAt: DateTime.fromMillisecondsSinceEpoch(map['lastActiveAt']),
+      isKicked: map['isKicked'] ?? false,
+      kickedAt: map['kickedAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['kickedAt'])
+          : null,
+      isSpeaker: map['isSpeaker'] ?? false,
       isHere: map['isHere'] ?? false,
       isblocked: map['isblocked'] ?? false,
     );
@@ -75,7 +101,7 @@ class FirebaseChatUser {
 
   @override
   String toString() {
-    return 'FirebaseChatUser(id: $id, name: $name, image: $image, role: $role, lastActiveAt: $lastActiveAt, isHere: $isHere, isblocked: $isblocked)';
+    return 'FirebaseChatUser(id: $id, name: $name, image: $image, role: $role, lastActiveAt: $lastActiveAt, isKicked: $isKicked, kickedAt: $kickedAt, isSpeaker: $isSpeaker, isHere: $isHere, isblocked: $isblocked)';
   }
 
   @override
@@ -88,6 +114,9 @@ class FirebaseChatUser {
         other.image == image &&
         other.role == role &&
         other.lastActiveAt == lastActiveAt &&
+        other.isKicked == isKicked &&
+        other.kickedAt == kickedAt &&
+        other.isSpeaker == isSpeaker &&
         other.isHere == isHere &&
         other.isblocked == isblocked;
   }
@@ -99,6 +128,9 @@ class FirebaseChatUser {
         image.hashCode ^
         role.hashCode ^
         lastActiveAt.hashCode ^
+        isKicked.hashCode ^
+        kickedAt.hashCode ^
+        isSpeaker.hashCode ^
         isHere.hashCode ^
         isblocked.hashCode;
   }

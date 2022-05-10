@@ -26,28 +26,29 @@ class ChatBar extends GetWidget<RoomController> {
             onPressed: () {},
           ),
           IconButton(
-            icon: Image.asset(Assets.assetsImagesUploadImg),
-            onPressed: () async {
-              XFile? pickedFile =
-                  await ImagePicker().pickImage(source: ImageSource.gallery);
-              if (pickedFile != null) {
-                controller.imageMessage = File(pickedFile.path);
-                RoomChatService().sendMessage(
-                    roomId: controller.room.id.toString(),
-                    chatMessage: controller.message.text,
-                    image: controller.imageMessage,
-                    fileName: user!.data!.name.toString() +
-                        user!.data!.userId.toString() +
-                        controller.imageMessage!.path.split('/').last,
-                    currentUserId: user!.data!.id.toString(),
-                    userName: user?.data?.name.toString(),
-                    userImage: user?.data?.image.toString());
-                Future.delayed(Duration(milliseconds: 700), () {
-                  controller.scrollDownAndClearTextField();
-                });
-              }
-            },
-          ),
+              icon: Image.asset(Assets.assetsImagesUploadImg),
+              onPressed: () async {
+                if (controller.isRoomOwner) {
+                  XFile? pickedFile = await ImagePicker()
+                      .pickImage(source: ImageSource.gallery);
+                  if (pickedFile != null) {
+                    controller.imageMessage = File(pickedFile.path);
+                    RoomChatService().sendMessage(
+                        roomId: controller.room.id.toString(),
+                        chatMessage: controller.message.text,
+                        image: controller.imageMessage,
+                        fileName: user!.data!.name.toString() +
+                            user!.data!.userId.toString() +
+                            controller.imageMessage!.path.split('/').last,
+                        currentUserId: user!.data!.id.toString(),
+                        userName: user?.data?.name.toString(),
+                        userImage: user?.data?.image.toString());
+                    Future.delayed(Duration(milliseconds: 700), () {
+                      controller.scrollDownAndClearTextField();
+                    });
+                  }
+                }
+              }),
           Expanded(
               child: TextFormField(
             controller: controller.message,
@@ -70,20 +71,24 @@ class ChatBar extends GetWidget<RoomController> {
                 hintText: "message",
                 hintStyle: getLightTextStyle(color: Colors.white70)),
           )),
-          IconButton(
-            icon: Icon(
-              Icons.mic,
-              color: Colors.white,
-            ),
-            onPressed: () => RoomService().muteAudioSwitcher(),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.speaker,
-              color: Colors.white,
-            ),
-            onPressed: () => RoomService().speakerAudioSwitcher(),
-          ),
+          controller.isRoomSpeaker
+              ? IconButton(
+                  icon: Icon(
+                    Icons.mic,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => RoomService().muteAudioSwitcher(),
+                )
+              : SizedBox(),
+          controller.isRoomSpeaker
+              ? IconButton(
+                  icon: Icon(
+                    Icons.speaker,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => RoomService().speakerAudioSwitcher(),
+                )
+              : SizedBox(),
         ]),
       ),
     );

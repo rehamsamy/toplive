@@ -36,13 +36,14 @@ class _RecentChatsState extends State<RecentChats> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: Text(
-          'سجل المحادثات',
+          'Chat history',
           style: TextStyle(
             fontSize: FontSize.xlarge,
             color: ColorsManger.black,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -92,10 +93,18 @@ class _RecentChatsState extends State<RecentChats> {
             vertical: context.width * .02,
           ),
           decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(.1),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                  offset: Offset(5, 5),
+                )
+              ],
               //TODO: ADD read and unread Colors
               color: chatRoom.lastSender != widget.myId
-                  ? Color.fromARGB(87, 78, 81, 241).withOpacity(0.8)
-                  : Color.fromARGB(255, 44, 59, 126).withOpacity(0.8),
+                  ? Color.fromARGB(255, 219, 225, 252)
+                  : Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.circular(AppSize.size12)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,7 +112,7 @@ class _RecentChatsState extends State<RecentChats> {
               Row(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(100),
                     child: CachedNetworkImage(
                         imageUrl: chatRoom.userA == widget.myId
                             ? chatRoom.bImage.toString()
@@ -145,12 +154,12 @@ class _RecentChatsState extends State<RecentChats> {
                         height: context.width * (.1),
                       ),
                       SizedBox(
-                          width: context.width * .2,
+                          width: context.width * .35,
                           child: Text('${chatRoom.lastMsg}',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  fontSize: FontSize.xxlarge,
-                                  color: ColorsManger.primary,
+                                  fontSize: FontSize.small,
+                                  color: ColorsManger.darkGrey,
                                   //           fontSize: Dimensions.getDesirableWidth(4),
                                   //          color: MyColors().textColor,
                                   fontWeight: FontWeight.w500))),
@@ -162,21 +171,6 @@ class _RecentChatsState extends State<RecentChats> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                        timeago.format(
-                            DateTime.now().subtract(DateTime.now()
-                                .difference(chatRoom.lastChat!.toUtc())),
-                            locale: 'ar_short'),
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: FontSize.medium,
-                            color: ColorsManger.grey1,
-                            //      fontSize: Dimensions.getDesirableWidth(4),
-                            //    color: MyColors().textColor,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      height: context.height * .05,
-                    ),
                     SizedBox(
                       width: context.width * .1,
                       height: context.height * .02,
@@ -185,13 +179,28 @@ class _RecentChatsState extends State<RecentChats> {
                       child: chatRoom.lastSender != widget.myId
                           ? Container(
                               alignment: Alignment.centerLeft,
-                              child: Text('New',
+                              child: Text('New!',
                                   style: TextStyle(
                                       // fontSize: Dimensions.getDesirableWidth(4),
-                                      color: ColorsManger.grey1,
+                                      color: ColorsManger.primary,
                                       fontWeight: FontWeight.bold)))
                           : const Text(''),
-                    )
+                    ),
+                    SizedBox(
+                      height: context.height * .05,
+                    ),
+                    Text(
+                        timeago.format(
+                            DateTime.now().subtract(DateTime.now()
+                                .difference(chatRoom.lastChat!.toUtc())),
+                            locale: 'ar_short'),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: FontSize.small,
+                            color: ColorsManger.darkGrey,
+                            //      fontSize: Dimensions.getDesirableWidth(4),
+                            //    color: MyColors().textColor,
+                            fontWeight: FontWeight.bold)),
                   ],
                 ),
               )
