@@ -85,6 +85,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                   initialCountryCode: 'EG',
                                   onChanged: (phone) {
                                     controller.otp.text = phone.completeNumber;
+                                    controller.countryCode = phone.countryCode;
                                   },
                                 ),
                                 Container(

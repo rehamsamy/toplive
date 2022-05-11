@@ -20,14 +20,14 @@ class RoomService extends GetxService {
     controller.engine = await RtcEngine.create(_appId);
     await controller.engine.leaveChannel();
     controller.engine.setEventHandler(_rtcEventHandler());
+
     await controller.engine.enableAudio();
     await controller.engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
     await controller.engine.setEnableSpeakerphone(true);
-
     await controller.engine.setClientRole(role);
 
     // await engine.setDefaultAudioRoutetoSpeakerphone(true);
-    await controller.engine.startEchoTest();
+    //await controller.engine.startEchoTest();
 
     await controller.engine.joinChannel(null, channelName, null, 0);
     print("user_joined");
@@ -48,10 +48,10 @@ class RoomService extends GetxService {
   speakerAudioSwitcher() async {
     await controller.engine.isSpeakerphoneEnabled() ?? false
         ? await controller.engine
-            .setEnableSpeakerphone(false)
+            .enableAudio()
             .then((value) => print("Speaker is off"))
         : await controller.engine
-            .setEnableSpeakerphone(true)
+            .disableAudio()
             .then((value) => print("Speaker is On"));
     await controller.engine.isSpeakerphoneEnabled() ?? false
         ? await controller.engine

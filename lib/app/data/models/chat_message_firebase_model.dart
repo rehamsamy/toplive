@@ -240,3 +240,79 @@ class FirebaseChatMessageModel {
         messageTime.hashCode;
   }
 }
+
+class FirebaseSpeakerRequestModel {
+  String roomId;
+  String adminId;
+  String speakerId;
+  DateTime requestTime;
+  FirebaseSpeakerRequestModel({
+    required this.roomId,
+    required this.adminId,
+    required this.speakerId,
+    required this.requestTime,
+  });
+
+  FirebaseSpeakerRequestModel copyWith({
+    String? roomId,
+    String? adminId,
+    String? speakerId,
+    DateTime? requestTime,
+  }) {
+    return FirebaseSpeakerRequestModel(
+      roomId: roomId ?? this.roomId,
+      adminId: adminId ?? this.adminId,
+      speakerId: speakerId ?? this.speakerId,
+      requestTime: requestTime ?? this.requestTime,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'roomId': roomId});
+    result.addAll({'adminId': adminId});
+    result.addAll({'speakerId': speakerId});
+    result.addAll({'requestTime': requestTime.millisecondsSinceEpoch});
+
+    return result;
+  }
+
+  factory FirebaseSpeakerRequestModel.fromMap(Map<String, dynamic> map) {
+    return FirebaseSpeakerRequestModel(
+      roomId: map['roomId'] ?? '',
+      adminId: map['adminId'] ?? '',
+      speakerId: map['speakerId'] ?? '',
+      requestTime: DateTime.fromMillisecondsSinceEpoch(map['requestTime']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory FirebaseSpeakerRequestModel.fromJson(String source) =>
+      FirebaseSpeakerRequestModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'FirebaseSpeakerRequestModel(roomId: $roomId, adminId: $adminId, speakerId: $speakerId, requestTime: $requestTime)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is FirebaseSpeakerRequestModel &&
+        other.roomId == roomId &&
+        other.adminId == adminId &&
+        other.speakerId == speakerId &&
+        other.requestTime == requestTime;
+  }
+
+  @override
+  int get hashCode {
+    return roomId.hashCode ^
+        adminId.hashCode ^
+        speakerId.hashCode ^
+        requestTime.hashCode;
+  }
+}

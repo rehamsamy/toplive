@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
 import 'package:toplive/app/modules/home/controllers/home_controller.dart';
+import 'package:toplive/app/routes/app_pages.dart';
+import 'package:toplive/core/resourses/font_manger.dart';
 import 'package:toplive/core/services/chat/room_chat.dart';
 
 import '../../../../../core/resourses/assets.dart';
 import '../../../../../core/resourses/color_manger.dart';
 import '../../../../../core/resourses/styles_manger.dart';
 import '../../../../../core/resourses/values_manger.dart';
-import '../../../../routes/app_pages.dart';
 import '../../controllers/room_controller.dart';
 
 class RoomAppBar extends GetWidget<RoomController> {
@@ -67,7 +68,7 @@ class RoomAppBar extends GetWidget<RoomController> {
                       RoomChatService().addOrUpdateUser(
                           roomId: controller.room.id.toString(),
                           user: FirebaseChatUser(
-                              id: user?.data?.id.toString() ?? "",
+                              id: user?.data?.userId.toString() ?? "",
                               image: user?.data?.image.toString() ?? "",
                               isHere: true,
                               isSpeaker: false,
@@ -133,52 +134,70 @@ class _BackButtonDialogState extends State<BackButtonDialog> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppPadding.padding20),
           child: Material(
-            color: ColorsManger.black,
-            elevation: 2,
+            color: Colors.transparent,
+            elevation: 0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSize.size12)),
             child: SingleChildScrollView(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                //mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: ColorsManger.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(AppSize.size12),
-                          topRight: Radius.circular(AppSize.size12)),
-                    ),
-                    width: context.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Exit ?',
-                        style: getBoldTextStyle(
-                            color: ColorsManger.black, fontSize: 20),
-                      ),
-                    ),
+                  GetBuilder<RoomController>(
+                    init: RoomController(),
+                    initState: (_) {},
+                    builder: (RoomController controller) {
+                      return GestureDetector(
+                          onTap: () {
+                            controller.engine.leaveChannel();
+                            controller.engine.destroy();
+                            Get.offAndToNamed(Routes.BOTTOM_NAV_BAR);
+                          },
+                          child: Column(
+                            children: [
+                              Image.asset(Assets.assetsImagesExitRoom,
+                                  height: context.height * .2),
+                              const SizedBox(
+                                height: AppSize.size12,
+                              ),
+                              Text(
+                                "Exit Room",
+                                style: getBoldTextStyle(
+                                    color: ColorsManger.white,
+                                    fontSize: FontSize.xxlarge),
+                              )
+                            ],
+                          ));
+                    },
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: AppSize.size12 * 4,
                   ),
-                  ListTile(
-                      title: Text("Exit without leaving the room",
-                          style: getMediumTextStyle(color: ColorsManger.white)),
-                      leading: Icon(Icons.exit_to_app,
-                          color: ColorsManger.white, size: 30),
-                      onTap: () {
-                        Get.offAllNamed(Routes.BOTTOM_NAV_BAR);
-                      }),
-                  const SizedBox(
-                    height: 10,
+                  GetBuilder<RoomController>(
+                    init: RoomController(),
+                    initState: (_) {},
+                    builder: (RoomController controller) {
+                      return GestureDetector(
+                          onTap: () {
+                            Get.offAndToNamed(Routes.BOTTOM_NAV_BAR);
+                          },
+                          child: Column(
+                            children: [
+                              Image.asset(Assets.assetsImagesKeepRoom,
+                                  height: context.height * .2),
+                              const SizedBox(
+                                height: AppSize.size12,
+                              ),
+                              Text(
+                                "Keep Room",
+                                style: getBoldTextStyle(
+                                    color: ColorsManger.white,
+                                    fontSize: FontSize.xxlarge),
+                              )
+                            ],
+                          ));
+                    },
                   ),
-                  ListTile(
-                      title: Text("Exit room",
-                          style: getMediumTextStyle(color: ColorsManger.white)),
-                      leading:
-                          Image.asset(Assets.assetsImagesLogout, width: 30),
-                      onTap: () {}),
                 ],
               ),
             ),

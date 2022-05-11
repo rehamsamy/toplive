@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toplive/app/modules/others/check_if_signed_and_navigate.dart';
 import 'package:toplive/app/modules/others/error_screen.dart';
+import 'package:toplive/core/constants/app_const.dart';
 import 'package:toplive/core/services/bindings.dart';
 import 'package:toplive/core/services/theme.dart';
 import 'package:toplive/core/services/translations_service.dart';
@@ -15,6 +18,8 @@ import 'package:responsive_framework/responsive_framework.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseFirestore.instance.clearPersistence();
+  prefs = await SharedPreferences.getInstance();
   await SentryFlutter.init(
     (options) {
       options.dsn =

@@ -8,7 +8,8 @@ import 'package:toplive/core/resourses/font_manger.dart';
 import '../../../../../core/resourses/color_manger.dart';
 import '../../../../../core/resourses/styles_manger.dart';
 import '../../../../../core/resourses/values_manger.dart';
-import '../../../../../core/services/agora_room_service.dart';
+import '../../../../../core/services/chat/agora_room_service.dart';
+import '../../../../../core/services/chat/agora_room_service.dart';
 import '../../../../../core/services/chat/room_chat.dart';
 import '../../controllers/room_controller.dart';
 
@@ -231,7 +232,7 @@ class RoomUsers extends GetWidget<RoomController> {
                                 RoomChatService().addOrUpdateUser(
                                     roomId: controller.room.id.toString(),
                                     user: FirebaseChatUser(
-                                        id: user?.data?.id.toString() ?? "",
+                                        id: user?.data?.userId.toString() ?? "",
                                         image:
                                             user?.data?.image.toString() ?? "",
                                         isHere: true,
@@ -246,8 +247,10 @@ class RoomUsers extends GetWidget<RoomController> {
                                 RoomService().speakerAudioSwitcher();
                                 controller.isRoomSpeaker = true;
                                 controller.update();
-                              } else {
-                                null;
+                              } else if (!controller.isRoomOwner) {
+                                RoomChatService().getAllSpeakerRequests(
+                                    controller.room.id.toString(),
+                                    user?.data?.id.toString() ?? "");
                               }
                             },
                             child: Container(

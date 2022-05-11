@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../resourses/assets.dart';
 
 const String baseUrl = "https://dev03.matrixclouds.net/top-live/public/api/";
+late SharedPreferences prefs;
 enum UserType {
   owner,
   visiter,
@@ -27,6 +29,6 @@ Map<String, String> getRequestHeaders({
     'x-api-key':
         '2Qhvx/46JXLq9dApP97tbfQqoPlwWw5CfkWdEfLUBEj7JqFHsJBh/cAmjzqUIIhLV7JWlsixLElYrTED2Tj6qQ==',
     'Content-Language': 'ar',
-    'Authorization': 'Bearer $token'
+    'Authorization': 'Bearer ${prefs.getString('token')}',
   };
 }

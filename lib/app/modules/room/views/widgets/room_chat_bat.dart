@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:toplive/core/services/agora_room_service.dart';
+import 'package:toplive/core/resourses/font_manger.dart';
+import 'package:toplive/core/services/chat/agora_room_service.dart';
 
 import '../../../../../core/resourses/assets.dart';
 import '../../../../../core/resourses/styles_manger.dart';
 import '../../../../../core/resourses/values_manger.dart';
+import '../../../../../core/services/chat/agora_room_service.dart';
 import '../../../../../core/services/chat/room_chat.dart';
 import '../../../home/controllers/home_controller.dart';
 import '../../controllers/room_controller.dart';
@@ -66,8 +68,10 @@ class ChatBar extends GetWidget<RoomController> {
                 controller.scrollDownAndClearTextField();
               });
             },
+            style: getLightTextStyle(
+                color: Colors.white, fontSize: FontSize.medium),
             decoration: InputDecoration(
-                fillColor: Colors.white12,
+                fillColor: Colors.black38,
                 hintText: "message",
                 hintStyle: getLightTextStyle(color: Colors.white70)),
           )),

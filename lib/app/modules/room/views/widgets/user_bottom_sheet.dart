@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
 import 'package:toplive/app/data/remote_data_sources/friends_apis.dart';
 import 'package:toplive/app/modules/home/controllers/home_controller.dart';
+import 'package:toplive/app/modules/profile/views/other_profile_view.dart';
 import 'package:toplive/app/modules/room/controllers/room_controller.dart';
 import 'package:toplive/app/modules/room/views/widgets/bottom_sheet_action_button.dart';
 import 'package:toplive/core/services/chat/room_chat.dart';
@@ -18,6 +19,7 @@ class UserBottomSheet extends GetWidget<RoomController> {
   const UserBottomSheet(this.userId, this.userName, this.userImage, {Key? key})
       : super(key: key);
   final String userId;
+
   final String userName;
   final String userImage;
   @override
@@ -30,11 +32,16 @@ class UserBottomSheet extends GetWidget<RoomController> {
         const SizedBox(
           height: AppSize.size8,
         ),
-        CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 30,
-          backgroundImage: NetworkImage(
-            userImage,
+        GestureDetector(
+          onTap: () {
+            Get.to(() => OtherProfileView(int.parse(userId)));
+          },
+          child: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: 30,
+            backgroundImage: NetworkImage(
+              userImage,
+            ),
           ),
         ),
         const SizedBox(
@@ -90,7 +97,7 @@ class UserBottomSheet extends GetWidget<RoomController> {
                   RoomChatService().addOrUpdateUser(
                       roomId: controller.room.id.toString(),
                       user: FirebaseChatUser(
-                          id: user?.data?.id.toString() ?? "",
+                          id: user?.data?.userId.toString() ?? "",
                           lastActiveAt: DateTime.now(),
                           isSpeaker: false));
                 },

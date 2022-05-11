@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:toplive/app/data/models/room_model.dart';
 import 'package:toplive/app/modules/home/controllers/home_controller.dart';
-import 'package:toplive/core/services/agora_room_service.dart';
+import 'package:toplive/core/services/chat/agora_room_service.dart';
 import 'package:flutter/material.dart';
 import 'package:toplive/core/services/chat/room_chat.dart';
 
@@ -46,14 +46,13 @@ class RoomController extends GetxController {
   void init() async {
     super.onInit();
     engine = await RtcEngine.create("900170190e1c44028e728d407abf54a0");
-    RoomChatService().getAllSpeakerRequests(room.id.toString());
 
     RoomChatService().getFlyingStream(room.id.toString(), 2, Get.context!);
     isRoomOwner = room.id.toString() == user?.data?.id.toString();
     RoomChatService().addOrUpdateUser(
         roomId: room.id.toString(),
         user: FirebaseChatUser(
-            id: user?.data?.id.toString() ?? "",
+            id: user?.data?.userId.toString() ?? "",
             lastActiveAt: DateTime.now(),
             //isblocked: false,
             //role: "visitor",

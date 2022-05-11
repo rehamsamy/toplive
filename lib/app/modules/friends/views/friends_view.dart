@@ -74,7 +74,7 @@ class FriendsView extends GetView<FriendsController> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (_) => ChatScreen(
-                                                      myId: user?.data?.id
+                                                      myId: user?.data?.userId
                                                               .toString() ??
                                                           "",
                                                       hisId: friends?.data

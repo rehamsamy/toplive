@@ -9,6 +9,7 @@ import 'package:motion_toast/resources/arrays.dart';
 import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
 import 'package:flutter/material.dart';
 import 'package:toplive/core/resourses/color_manger.dart';
+import 'package:toplive/core/resourses/font_manger.dart';
 import 'package:toplive/core/resourses/styles_manger.dart';
 
 enum userRoles { owner, admin, member, visiter }
@@ -112,7 +113,7 @@ class RoomChatService {
         .collection("users")
         .doc(user.id);
     FirebaseFirestore.instance.runTransaction((transaction) async {
-      transaction.update(
+      transaction.set(
         documentReference,
         user.toMap(),
       );
@@ -122,7 +123,9 @@ class RoomChatService {
 
   StreamSubscription<QuerySnapshot<Map<String, dynamic>>> getAllSpeakerRequests(
     String roomId,
+    String speakerRequestId,
   ) {
+    //TODO: add filter to get only the requests of the current user
     return firebaseFirestore
         .collection("rooms")
         .doc(roomId)
@@ -131,23 +134,63 @@ class RoomChatService {
         .snapshots()
         .listen((event) {
           Get.defaultDialog(
-              title: "Speaker request",
-              middleText: event.docs.first.data()['name'] +
-                  " Has Requested to be a speaker  ",
-              textConfirm: "Accept",
-              onConfirm: () {},
-              textCancel: "Reject",
-              onCancel: () => Get.closeAllSnackbars());
+            title: "Speaker request",
+            middleText: event.docs.first.data()['name'] +
+                " Has Requested to be a speaker  ",
+            actions: [
+              TextButton(
+                onPressed: () {
+                  print("Confirmed");
+                  acceptSpeakerRequest(
+                      roomId, event.docs.first.data()['id'], speakerRequestId);
+                },
+                child: Text(
+                  "Confirm",
+                  style: getBoldTextStyle(fontSize: FontSize.large),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.close(1);
+                },
+                child: Text(
+                  "Reject",
+                  style: getBoldTextStyle(fontSize: FontSize.large),
+                ),
+              )
+            ],
+          );
           print(event.docs.map((e) {
             print(e.data()['name']);
           }).toString());
         });
   }
 
-  void sendSpeakerRequest(
+  void acceptSpeakerRequest(
     String roomId,
-    String currentUserId,
-  ) {}
+    String adminUserId,
+    String acceptedSpeakerId,
+  ) {
+    DocumentReference documentReference = firebaseFirestore
+        .collection("rooms")
+        .doc(roomId)
+        .collection("speakers_requests")
+        .doc(acceptedSpeakerId)
+        .collection("requests")
+        .doc(adminUserId);
+    FirebaseSpeakerRequestModel speakerRequest = FirebaseSpeakerRequestModel(
+        roomId: roomId,
+        adminId: adminUserId,
+        speakerId: acceptedSpeakerId,
+        requestTime: DateTime.now());
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      transaction.set(
+        documentReference,
+        speakerRequest.toMap(),
+      );
+    });
+    print("sent");
+  }
 
   void sendMessage(
       {String? chatMessage,

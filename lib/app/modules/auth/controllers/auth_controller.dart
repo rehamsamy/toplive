@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:toplive/app/data/remote_data_sources/auth_apis.dart';
 import 'package:toplive/app/modules/auth/views/phone_flow/otp_verification.dart';
 import 'package:toplive/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class AuthController extends GetxController {
   var verId = '';
   var authStatus = ''.obs;
   bool isPhoneOk = false;
+  String countryCode = '';
   String authUserID = "";
   final phone = TextEditingController();
   final otp = TextEditingController();
@@ -63,14 +65,14 @@ class AuthController extends GetxController {
         verificationFailed: (authException) {
           Get.snackbar("sms code info", "otp code hasn't been sent!!");
         },
-        codeSent: (String id, [int? forceResent]) {
+        codeSent: (String id, [int? forceResent]) async {
           print("Code Sent $id");
 
           isLoading.value = false;
           // ignore: unnecessary_this
           this.verId = id;
           authStatus.value = "login successfully";
-
+          await AuthApis().getOTP(countryCode, phone);
           Get.to(() => VerifyCodePage());
         },
         codeAutoRetrievalTimeout: (String id) {
@@ -88,6 +90,7 @@ class AuthController extends GetxController {
       if (userCredential.user != null) {
         isLoading.value = false;
         Get.offAllNamed(Routes.BOTTOM_NAV_BAR);
+        await AuthApis().sendOTP();
       }
     } on Exception catch (e) {
       Get.snackbar("otp info", " ${e.toString()}");
