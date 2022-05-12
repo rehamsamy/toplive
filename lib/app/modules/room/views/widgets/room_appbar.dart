@@ -1,8 +1,11 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:ease/ease.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
 import 'package:toplive/app/modules/home/controllers/home_controller.dart';
+import 'package:toplive/app/modules/profile/views/widgets/dropdown.dart';
+import 'package:toplive/app/modules/room/views/widgets/room_appbar_settings_button.dart';
 import 'package:toplive/app/routes/app_pages.dart';
 import 'package:toplive/core/resourses/font_manger.dart';
 import 'package:toplive/core/services/chat/room_chat.dart';
@@ -14,7 +17,8 @@ import '../../../../../core/resourses/values_manger.dart';
 import '../../controllers/room_controller.dart';
 
 class RoomAppBar extends GetWidget<RoomController> {
-  const RoomAppBar({Key? key}) : super(key: key);
+  RoomAppBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,14 +46,7 @@ class RoomAppBar extends GetWidget<RoomController> {
                   ),
                 ),
               ),
-              Container(
-                //padding: EdgeInsets.symmetric(horizontal: 20),
-                child: IconButton(
-                  icon:
-                      Icon(Icons.more_horiz_rounded, color: ColorsManger.grey1),
-                  onPressed: () {},
-                ),
-              ),
+              RoomActions(),
               Spacer(),
               Container(
                 decoration: BoxDecoration(
@@ -59,28 +56,32 @@ class RoomAppBar extends GetWidget<RoomController> {
                       bottomLeft: Radius.circular(50)),
                 ),
                 child: Row(children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.add_circle_rounded,
-                      color: ColorsManger.grey1,
-                    ),
-                    onPressed: () {
-                      RoomChatService().addOrUpdateUser(
-                          roomId: controller.room.id.toString(),
-                          user: FirebaseChatUser(
-                              id: user?.data?.userId.toString() ?? "",
-                              image: user?.data?.image.toString() ?? "",
-                              isHere: true,
-                              isSpeaker: false,
-                              isKicked: false,
-                              isblocked: false,
-                              name: user?.data?.name.toString() ?? "",
-                              role: "admin",
-                              lastActiveAt: DateTime.now()));
-                      Get.snackbar("Joined", "You are now a room member",
-                          colorText: ColorsManger.grey2);
-                    },
-                  ),
+                  controller.isRoomJoined
+                      ? const SizedBox(
+                          width: 20,
+                        )
+                      : IconButton(
+                          icon: Icon(
+                            Icons.add_circle_rounded,
+                            color: ColorsManger.grey1,
+                          ),
+                          onPressed: () {
+                            RoomChatService().addUser(
+                                roomId: controller.room.id.toString(),
+                                user: FirebaseChatUser(
+                                    id: user?.data?.userId.toString() ?? "",
+                                    image: user?.data?.image.toString() ?? "",
+                                    isHere: true,
+                                    isSpeaker: false,
+                                    isKicked: false,
+                                    isblocked: false,
+                                    name: user?.data?.name.toString() ?? "",
+                                    role: "admin",
+                                    lastActiveAt: DateTime.now()));
+                            Get.snackbar("Joined", "You are now a room member",
+                                colorText: ColorsManger.grey2);
+                          },
+                        ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -149,6 +150,12 @@ class _BackButtonDialogState extends State<BackButtonDialog> {
                     builder: (RoomController controller) {
                       return GestureDetector(
                           onTap: () {
+                            RoomChatService().updateUser(
+                                roomId: controller.room.id.toString(),
+                                user: FirebaseChatUser(
+                                    id: user?.data?.id.toString() ?? "",
+                                    isHere: false,
+                                    lastActiveAt: DateTime.now()));
                             controller.engine.leaveChannel();
                             controller.engine.destroy();
                             Get.offAndToNamed(Routes.BOTTOM_NAV_BAR);

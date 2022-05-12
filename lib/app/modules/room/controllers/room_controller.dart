@@ -19,7 +19,7 @@ class RoomController extends GetxController {
   late RtcEngine engine;
   int? remoteUid;
   bool isRoomOwner = false;
-  bool isRoomMember = false;
+  bool isRoomJoined = false;
   bool isRoomSpeakerPermissionAllowed = false;
   bool isRoomSpeaker = false;
 
@@ -45,20 +45,23 @@ class RoomController extends GetxController {
 
   void init() async {
     super.onInit();
-    engine = await RtcEngine.create("900170190e1c44028e728d407abf54a0");
-
-    RoomChatService().getFlyingStream(room.id.toString(), 2, Get.context!);
-    isRoomOwner = room.id.toString() == user?.data?.id.toString();
-    RoomChatService().addOrUpdateUser(
+    RoomChatService().addUser(
         roomId: room.id.toString(),
         user: FirebaseChatUser(
             id: user?.data?.userId.toString() ?? "",
             lastActiveAt: DateTime.now(),
-            //isblocked: false,
-            //role: "visitor",
             image: user?.data?.image.toString() ?? "",
+            isKicked: false,
+            isSpeaker: false,
+            isblocked: false,
+            role: "member",
             isHere: true,
             name: user?.data?.name.toString() ?? ""));
+    engine = await RtcEngine.create("900170190e1c44028e728d407abf54a0");
+
+    //RoomChatService().getFlyingStream(room.id.toString(), 2, Get.context!);
+    isRoomOwner = room.user?.id.toString() == user?.data?.id.toString();
+
     users = RoomChatService().getChatUsersStream(
         room.id.toString(), room.microphones!.toInt(), Get.context!);
     room.user?.id.toString() == user?.data?.id.toString();
@@ -66,12 +69,14 @@ class RoomController extends GetxController {
     print('onInit');
     //print("Room ID :" + room.id.toString());
     await RoomService()
-        .initAgora(channelName: room.id.toString(), role: ClientRole.Audience)
+        .initAgora(
+            channelName: room.id.toString(), role: ClientRole.Broadcaster)
         .then((value) {
       remoteUid = value[0];
       engine = value[1];
     });
     print("agora_started");
+
     Future.delayed(Duration(seconds: 1), () {
       scrollDownAndClearTextField();
     });

@@ -37,7 +37,7 @@ class EventsView extends GetView<EventsController> {
       ),
       body: Center(
         child: Text(
-          'EventsView is working',
+          'Soon...',
           style: TextStyle(fontSize: 20),
         ),
       ),

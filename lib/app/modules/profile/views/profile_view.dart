@@ -48,7 +48,7 @@ class ProfileView extends GetView<ProfileController> {
                     controller.name.text = user?.data!.name ?? "name";
 
                     controller.birthDate.value =
-                        DateTime.parse(user?.data!.birthDate ?? "1999-10-9");
+                        DateTime.parse(user?.data!.birthDate ?? "1999-09-10");
                     controller.gender.value =
                         controller.genderItems.elementAt(0);
                     controller.status.text =

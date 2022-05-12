@@ -30,6 +30,7 @@ class RoomService extends GetxService {
     //await controller.engine.startEchoTest();
 
     await controller.engine.joinChannel(null, channelName, null, 0);
+
     print("user_joined");
 
     return [remoteUid, controller.engine];
@@ -60,6 +61,8 @@ class RoomService extends GetxService {
         : await controller.engine
             .setClientRole(ClientRole.Audience)
             .then((value) => print(" I am audience"));
+    controller.isRoomSpeaker = true;
+    controller.update();
   }
 
   RtcEngineEventHandler _rtcEventHandler() {

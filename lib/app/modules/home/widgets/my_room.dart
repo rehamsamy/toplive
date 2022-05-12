@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:toplive/app/data/models/my_room_model.dart';
 import 'package:toplive/app/data/remote_data_sources/home_apis.dart';
 import 'package:toplive/core/constants/app_const.dart';
@@ -49,6 +50,12 @@ class MyRoom extends StatelessWidget {
                                 myRoom?.data?.roomImage.toString() ?? "",
                                 height: 50,
                                 fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Center(
+                                  child: Icon(
+                                    Icons.error,
+                                  ),
+                                ),
                               )),
                           Spacer(),
                           Text(
@@ -72,6 +79,12 @@ class MyRoom extends StatelessWidget {
                                     "",
                                 height: 15,
                                 fit: BoxFit.contain,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Center(
+                                  child: Icon(
+                                    Icons.error,
+                                  ),
+                                ),
                               )),
                           const SizedBox(width: 8),
                           Text(
@@ -88,7 +101,9 @@ class MyRoom extends StatelessWidget {
                     ])
                   : TextButton(
                       child: Text("Create Room"),
-                      onPressed: () => RoomApis().createRoom(),
+                      onPressed: () => RoomApis()
+                          .createRoom()
+                          .then((value) => Get.forceAppUpdate()),
                     ),
             ),
           );

@@ -26,92 +26,90 @@ class HomeView extends GetView<HomeController> {
           // return RoomsWidget(allRooms: allRooms);
           return Container(
             decoration: backgroundBoxDectoration,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * .87,
-                    width: double.infinity,
-                    child: TabBarAndTabViews(tabs: [
-                      //*PUBLICROOMS TAB
-                      TabPair(
-                        tab: Tab(
-                          text: 'Public Rooms',
-                        ),
-                        view: Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            Carousel(),
-                            Expanded(
-                              child: SearchInput(
-                                hintText: "Search",
-                                onChanged: (String value) {
-                                  print(value);
-                                },
-                                searchController: TextEditingController(),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 6,
-                              child: RoomsWidget(allRooms: allRooms),
-                            ),
-                          ],
-                        ),
+            child: Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * .87,
+                  width: double.infinity,
+                  child: TabBarAndTabViews(tabs: [
+                    //*PUBLICROOMS TAB
+                    TabPair(
+                      tab: Tab(
+                        text: 'Public Rooms',
                       ),
-                      //* EXPLORE Tab
-                      TabPair(
-                        tab: Tab(
-                          text: 'Explore',
-                        ),
-                        view: Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            AllCountriesList(),
-                            CategoriesList(),
-                            Container(
-                              width: double.infinity,
-                              child: SearchInput(
-                                hintText: "Search",
-                                onChanged: (String value) {
-                                  print(value);
-                                },
-                                searchController: TextEditingController(),
-                              ),
+                      view: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          Carousel(),
+                          Expanded(
+                            child: SearchInput(
+                              hintText: "Search",
+                              onChanged: (String value) {
+                                print(value);
+                              },
+                              searchController: TextEditingController(),
                             ),
-                            Expanded(
-                              child: RoomsWidget(allRooms: allRooms),
-                            ),
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                            flex: 6,
+                            child: RoomsWidget(allRooms: allRooms),
+                          ),
+                        ],
                       ),
-                      //* MYROOMS Tab
-                      TabPair(
-                        tab: Tab(
-                          text: 'My Rooms',
-                        ),
-                        view: Column(
-                          children: [
-                            MyRoom(),
-                            Container(
-                              width: double.infinity,
-                              child: SearchInput(
-                                hintText: "Search",
-                                onChanged: (String value) {
-                                  print(value);
-                                },
-                                searchController: TextEditingController(),
-                              ),
+                    ),
+                    //* EXPLORE Tab
+                    TabPair(
+                      tab: Tab(
+                        text: 'Explore',
+                      ),
+                      view: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          AllCountriesList(),
+                          CategoriesList(),
+                          Container(
+                            width: double.infinity,
+                            child: SearchInput(
+                              hintText: "Search",
+                              onChanged: (String value) {
+                                print(value);
+                              },
+                              searchController: TextEditingController(),
                             ),
-                            Expanded(
-                              child: RoomsWidget(allRooms: allRooms),
+                          ),
+                          Expanded(
+                            child: RoomsWidget(allRooms: allRooms),
+                          ),
+                        ],
+                      ),
+                    ),
+                    //* MYROOMS Tab
+                    TabPair(
+                      tab: Tab(
+                        text: 'My Rooms',
+                      ),
+                      view: Column(
+                        children: [
+                          MyRoom(),
+                          Container(
+                            width: double.infinity,
+                            child: SearchInput(
+                              hintText: "Search",
+                              onChanged: (String value) {
+                                print(value);
+                              },
+                              searchController: TextEditingController(),
                             ),
-                          ],
-                        ),
-                      )
-                    ]),
-                  ),
-                ],
-              ),
+                          ),
+                          Expanded(
+                            child: RoomsWidget(allRooms: allRooms),
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
+                ),
+              ],
             ),
           );
         } else {

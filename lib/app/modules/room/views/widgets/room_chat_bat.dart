@@ -90,20 +90,12 @@ class ChatBar extends GetWidget<RoomController> {
               }
             },
           ),
-          GetBuilder(
-            builder: (RoomController controller) {
-              if (controller.isRoomSpeaker) {
-                return IconButton(
-                  icon: Icon(
-                    Icons.speaker,
-                    color: Colors.white,
-                  ),
-                  onPressed: () => RoomService().speakerAudioSwitcher(),
-                );
-              } else {
-                return SizedBox();
-              }
-            },
+          IconButton(
+            icon: Icon(
+              Icons.speaker,
+              color: Colors.white,
+            ),
+            onPressed: () => RoomService().speakerAudioSwitcher(),
           )
         ]),
       ),

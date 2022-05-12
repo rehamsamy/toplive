@@ -4,6 +4,7 @@ import 'package:toplive/app/data/models/chat_message_firebase_model.dart';
 import 'package:toplive/app/data/remote_data_sources/friends_apis.dart';
 import 'package:toplive/app/modules/home/controllers/home_controller.dart';
 import 'package:toplive/app/modules/profile/views/other_profile_view.dart';
+import 'package:toplive/app/modules/profile/views/profile_view.dart';
 import 'package:toplive/app/modules/room/controllers/room_controller.dart';
 import 'package:toplive/app/modules/room/views/widgets/bottom_sheet_action_button.dart';
 import 'package:toplive/core/services/chat/room_chat.dart';
@@ -34,7 +35,11 @@ class UserBottomSheet extends GetWidget<RoomController> {
         ),
         GestureDetector(
           onTap: () {
-            Get.to(() => OtherProfileView(int.parse(userId)));
+            if (user?.data?.userId == userId) {
+              Get.to(() => ProfileView());
+            } else {
+              Get.to(() => OtherProfileView(int.parse(userId)));
+            }
           },
           child: CircleAvatar(
             backgroundColor: Colors.transparent,
@@ -94,7 +99,7 @@ class UserBottomSheet extends GetWidget<RoomController> {
                 }),
             BottomSheetActionButtonBottom(
                 onPressed: () {
-                  RoomChatService().addOrUpdateUser(
+                  RoomChatService().updateUser(
                       roomId: controller.room.id.toString(),
                       user: FirebaseChatUser(
                           id: user?.data?.userId.toString() ?? "",

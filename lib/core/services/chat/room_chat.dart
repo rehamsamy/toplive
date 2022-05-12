@@ -40,7 +40,7 @@ class RoomChatService {
         .collection("rooms")
         .doc(roomId)
         .collection("messages")
-        // .orderBy("time", descending: true)
+        .orderBy("time", descending: false)
         .limit(limit)
         .snapshots();
   }
@@ -105,8 +105,7 @@ class RoomChatService {
         .snapshots();
   }
 
-  void addOrUpdateUser(
-      {required String roomId, required FirebaseChatUser user}) async {
+  void addUser({required String roomId, required FirebaseChatUser user}) async {
     DocumentReference documentReference = firebaseFirestore
         .collection("rooms")
         .doc(roomId)
@@ -114,6 +113,22 @@ class RoomChatService {
         .doc(user.id);
     FirebaseFirestore.instance.runTransaction((transaction) async {
       transaction.set(
+        documentReference,
+        user.toMap(),
+      );
+    });
+    print("sent");
+  }
+
+  void updateUser(
+      {required String roomId, required FirebaseChatUser user}) async {
+    DocumentReference documentReference = firebaseFirestore
+        .collection("rooms")
+        .doc(roomId)
+        .collection("users")
+        .doc(user.id);
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      transaction.update(
         documentReference,
         user.toMap(),
       );

@@ -23,6 +23,7 @@ class RoomUsers extends GetWidget<RoomController> {
       height: MediaQuery.of(context).size.height * .2,
       child: Column(children: [
         StreamBuilder(
+          //  initialData: [FirebaseChatUser(id: "", name: "no name ")],
           stream: RoomChatService().getChatUsersStream(
               controller.room.id.toString(),
               controller.room.microphones ?? 5,
@@ -44,14 +45,13 @@ class RoomUsers extends GetWidget<RoomController> {
                   .isGreaterThan(0);
               print(
                   "isRoomSpeaker: ${controller.isRoomSpeakerPermissionAllowed}");
-              controller.isRoomMember = hosts
+              controller.isRoomJoined = hosts
                   .where((element) =>
-                      (element["role"] == "member") &&
-                      element["id"].toString() == user?.data?.id.toString())
+                      element["id"].toString() == user?.data?.userId.toString())
                   .toList()
                   .length
                   .isGreaterThan(0);
-              print("isRoomMember: ${controller.isRoomMember}");
+              print("isRoomMember: ${controller.isRoomJoined}");
 
               return Container(
                 child: Row(
@@ -82,65 +82,78 @@ class RoomUsers extends GetWidget<RoomController> {
                           color: Colors.white12, shape: BoxShape.circle),
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: hosts.length,
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.bottomSheet(UserBottomSheet(
-                                  hosts[index]["id"] ?? "",
-                                  hosts[index]["name"] ?? "",
-                                  hosts[index]["image"] ?? ""));
-                            },
-                            child: Container(
-                              height: 70,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: Image.network(
-                                      hosts[index]["image"].toString(),
-                                      width: MediaQuery.of(context).size.width /
-                                          10,
-                                      errorBuilder:
-                                          (context, error, stackTrace) =>
-                                              Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                10,
+                      child: Container(
+                        height: 70,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: hosts.length,
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.bottomSheet(UserBottomSheet(
+                                    hosts[index]["id"] ?? "",
+                                    hosts[index]["name"] ?? "",
+                                    hosts[index]["image"] ?? ""));
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4.0,
+                                ),
+                                height: 70,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Image.network(
+                                        hosts[index]["image"].toString(),
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 10,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white12),
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.mic,
-                                            color: ColorsManger.grey1,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              10,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              10,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white12),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.mic,
+                                              color: ColorsManger.grey1,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    hosts[index]["name"] ?? "$index",
-                                    style: getMediumTextStyle(
-                                        color: ColorsManger.grey1),
-                                  ),
-                                ],
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      hosts[index]["name"] ?? "$index",
+                                      style: getMediumTextStyle(
+                                          color: ColorsManger.grey1),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
+                    Container(
+                      child: Row(children: []),
+                    )
                   ],
                 ),
               );
@@ -160,6 +173,7 @@ class RoomUsers extends GetWidget<RoomController> {
                 alignment: WrapAlignment.start,
                 runSpacing: AppSize.size8,
                 spacing: AppSize.size8,
+                direction: Axis.horizontal,
                 children: [
                   ...List.generate(
                       controller.speakers.length,
@@ -227,30 +241,32 @@ class RoomUsers extends GetWidget<RoomController> {
                           controller.speakers.length,
                       (index) => GestureDetector(
                             onTap: () {
-                              if (controller.isRoomSpeakerPermissionAllowed &&
-                                  !controller.isRoomSpeaker) {
-                                RoomChatService().addOrUpdateUser(
-                                    roomId: controller.room.id.toString(),
-                                    user: FirebaseChatUser(
-                                        id: user?.data?.userId.toString() ?? "",
-                                        image:
-                                            user?.data?.image.toString() ?? "",
-                                        isHere: true,
-                                        isKicked: false,
-                                        isSpeaker: true,
-                                        isblocked: false,
-                                        name: user?.data?.name.toString() ?? "",
-                                        role: controller.isRoomOwner
-                                            ? "owner"
-                                            : "admin",
-                                        lastActiveAt: DateTime.now()));
-                                RoomService().speakerAudioSwitcher();
-                                controller.isRoomSpeaker = true;
-                                controller.update();
-                              } else if (!controller.isRoomOwner) {
+                              controller.isRoomSpeaker = true;
+                              controller.update();
+                              RoomChatService().updateUser(
+                                  roomId: controller.room.id.toString(),
+                                  user: FirebaseChatUser(
+                                      id: user?.data?.userId.toString() ?? "",
+                                      image: user?.data?.image.toString() ?? "",
+                                      isHere: true,
+                                      isKicked: false,
+                                      isSpeaker: true,
+                                      isblocked: false,
+                                      name: user?.data?.name.toString() ?? "",
+                                      role: controller.isRoomOwner
+                                          ? "owner"
+                                          : "admin",
+                                      lastActiveAt: DateTime.now()));
+
+                              controller.update();
+                              if (controller.isRoomSpeakerPermissionAllowed) {
+                              } else if (controller
+                                  .isRoomSpeakerPermissionAllowed) {
                                 RoomChatService().getAllSpeakerRequests(
                                     controller.room.id.toString(),
                                     user?.data?.id.toString() ?? "");
+                                controller.isRoomSpeaker = true;
+                                controller.update();
                               }
                             },
                             child: Container(

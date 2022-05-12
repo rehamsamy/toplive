@@ -77,6 +77,10 @@ class Assets {
   /// assets/images/location.png
   static const String assetsImagesLocation = "assets/images/location.png";
 
+  /// Assets for assetsImagesLockRoom
+  /// assets/images/lock_room.png
+  static const String assetsImagesLockRoom = "assets/images/lock_room.png";
+
   /// Assets for assetsImagesLogo
   /// assets/images/logo.png
   static const String assetsImagesLogo = "assets/images/logo.png";
@@ -101,13 +105,25 @@ class Assets {
   /// assets/images/room_background.png
   static const String assetsImagesRoomBackground = "assets/images/room_background.png";
 
+  /// Assets for assetsImagesRoomTheme
+  /// assets/images/room_theme.png
+  static const String assetsImagesRoomTheme = "assets/images/room_theme.png";
+
   /// Assets for assetsImagesSendMessage
   /// assets/images/send_message.png
   static const String assetsImagesSendMessage = "assets/images/send_message.png";
 
+  /// Assets for assetsImagesShareRoom
+  /// assets/images/share_room.png
+  static const String assetsImagesShareRoom = "assets/images/share_room.png";
+
   /// Assets for assetsImagesStatus
   /// assets/images/status.png
   static const String assetsImagesStatus = "assets/images/status.png";
+
+  /// Assets for assetsImagesUpgradeRoom
+  /// assets/images/upgrade_room.png
+  static const String assetsImagesUpgradeRoom = "assets/images/upgrade_room.png";
 
   /// Assets for assetsImagesUploadImg
   /// assets/images/upload_img.png
